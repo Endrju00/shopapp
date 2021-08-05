@@ -1,0 +1,9 @@
+{% if latest_sales %}
+  <ul>
+    {% for sale in latest_sales %}
+      <li><a href="{% url 'items:detail' sale.id %}">{{ sale.item }}</a></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No sales are available.</p>
+{% endif %}
