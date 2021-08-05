@@ -1,10 +1,39 @@
-<div class="container">
-  <h1>{{sale.item}}</h1>
-  <h2>Price: {{ sale.price }} PLN</h2>
-  <h3>Description:</h3>
-  <p>{{ sale.description }}</p>
-  <p>Product dimensions (cm): {{sale.item.length}}x{{sale.item.width}}x{{sale.item.height}}</p>
-  <p>Weight: {{ sale.item.weight }}g</p>
-  <p>Posted: {{ sale.pub_date }}</p>
-  <p>Available till {{ sale.exp_date }}</p>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="sale">
+  <div class="card">
+    <img src="{% static 'images/default.jpg' %}" class="card-img-top">
+    <div class="card-body">
+      <h2 class="card-title">{{ sale.item.name }}</h2><br>
+      <h3 class="card-title">{{ sale.price }}zł</h3><br>
+
+      <p class="card-text"><small class="text-muted">
+        Posted: <strong>{{ sale.pub_date }}</strong>
+        <span class="characteristic">Available till: <strong>{{ sale.exp_date }}</strong></span>
+      </small></p>
+    </div>
+  </div><br>
+
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Parameters</h2>
+      <p class="card-text second"><small class="text-muted">
+        Producer: <strong>{{ sale.item.producer }}</strong>
+        <span class="characteristic">Length: <strong>{{sale.item.length}}cm</strong></span>
+        <span class="characteristic">Width: <strong>{{sale.item.width}}cm</strong></span>
+        <span class="characteristic">Height: <strong>{{sale.item.height}}cm</strong></span>
+        <span class="characteristic">Weight: <strong>{{ sale.item.weight }}g</strong></span>
+      </small></p>
+    </div>
+  </div><br>
+
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Description</h2>
+      <p class="card-text">{{ sale.description }}</p>
+    </div>
+  </div><br>
+
 </div>
+{% endblock %}

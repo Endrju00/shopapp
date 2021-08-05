@@ -1,0 +1,32 @@
+body {
+  background: #e9ecef;
+}
+
+div {
+  width: 70%;
+}
+
+.list-group {
+  width: 30%;
+  margin-left: 10%;
+  margin-top: 10px;
+}
+
+#top-item {
+  background: #ffba08;
+  border: #faa307;
+}
+
+.sale {
+  margin-top: 20px;
+  margin-left: 40%;
+  width: 100%;
+}
+
+.characteristic{
+  margin-left: 40px;
+}
+
+.second {
+  background: 
+}
