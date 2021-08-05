@@ -8,9 +8,9 @@ class Item(models.Model):
     name = models.CharField(max_length=50)
     producer = models.CharField(max_length=50)
     weight = models.PositiveIntegerField(help_text='Please pass the weight in grams.')
-    height = models.PositiveIntegerField(help_text='Please pass the weight in centimeters.')
-    length = models.PositiveIntegerField(help_text='Please pass the weight in centimeters.')
-    width = models.PositiveIntegerField(help_text='Please pass the weight in centimeters.')
+    height = models.PositiveIntegerField(help_text='Please pass the height in centimeters.')
+    length = models.PositiveIntegerField(help_text='Please pass the length in centimeters.')
+    width = models.PositiveIntegerField(help_text='Please pass the width in centimeters.')
 
     def __str__(self):
         return f"{self.name} {self.producer}"
@@ -45,4 +45,4 @@ class SaleOffer(models.Model):
     category = models.CharField(max_length=2, choices=CATEGORY, default=OTHER)
 
     def __str__(self):
-        return f"{self.item.name} for {self.price}"
+        return f"{self.item.name} for {self.price} PLN"
