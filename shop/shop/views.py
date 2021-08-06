@@ -9,5 +9,5 @@ class HomePage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = [x[1] for x in SaleOffer.CATEGORY]
+        context['categories'] = SaleOffer.CATEGORY
         return context

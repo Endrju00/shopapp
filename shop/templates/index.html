@@ -5,7 +5,7 @@
     <ul class="list-group">
       <li class="list-group-item active" aria-current="true" id="top-item">Categories</li>
       {% for category in categories %}
-        <a href="#" class="list-group-item list-group-item-action">{{ category }}</a>
+        <a href="{% url 'items:filter' category.0 %}" class="list-group-item list-group-item-action">{{ category.1 }}</a>
       {% endfor %}
     </ul>
   </div>

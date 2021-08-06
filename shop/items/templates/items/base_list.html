@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h1 style="margin-left: 8%;">Recently added offers</h1><br>
+  <div class="list-group-item filters">
+    <h2>Filters</h2>
+    <hr>
+    <h4>Categories</h4>
+    <div style="width:100%;">
+      <form class="form-check" action="{% url 'items:index' %}" method="post">
+
+          {% csrf_token %}
+          {% for category in categories %}
+            <input class="form-check-input" type="radio" id={{category.0}} name="filter" value={{category.0}} required>
+            <label class="form-check-label" for={category.0}>{{ category.1 }}</label><br>
+          {% endfor %}<br>
+        <input class="btn btn-warning" style="width:90%;" type="submit" value="Submit filters">
+      </form>
+    </div>
+
+
+  </div>
+    {% block items %}
+    {% endblock %}
+{% endblock %}
