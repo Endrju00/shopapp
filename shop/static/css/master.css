@@ -27,6 +27,27 @@ div {
   margin-left: 40px;
 }
 
-.second {
-  background: 
+.data{
+  float: left;
+}
+
+.items {
+  margin-left: 40%;
+  width: 90%;
+}
+
+.offer {
+  margin-bottom: 30px;
+  height: 280px;
+  width: 100%;
+}
+
+.card-body{
+  width: 100%;
+}
+
+.filters{
+  float: left;
+  width: 30%;
+  margin-left: 8%;
 }

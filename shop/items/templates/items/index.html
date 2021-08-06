@@ -1,15 +1,47 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
   <div class="container">
-    {% if latest_sales %}
-      <ul>
+    <h1 style="margin-left: 8%;">Recently added offers</h1><br>
+    <div class="list-group-item filters">
+      
+    </div>
+    <div class="items">
+      {% if latest_sales %}
         {% for sale in latest_sales %}
-          <li><a href="{% url 'items:detail' sale.id %}">{{ sale.item }}</a></li>
+
+        <a href="{% url 'items:detail' sale.id %}" class="list-group-item list-group-item-action offer">
+          <p style="float: left;">
+            <img src="{% static 'images/default.jpg' %}" class="img-thumbnail" style="width: 250px; height: 250px; margin-right: 10px;">
+          </p>
+          <h1>{{ sale.item.name }}</h1>
+          <p><small class="text-muted">
+            Producer: <strong>{{ sale.item.producer }}</strong>
+            <span class="characteristic">Condition: <strong>{{ sale.item.get_condition }}</strong></span>
+            <span class="characteristic">Number of pieces in the package: <strong>{{ sale.quantity }}</strong></span>
+          </small></p>
+
+          <h2>{{ sale.price }}zł</h2>
+
+          <button type="button" class="btn btn-warning">Buy Now!</button>
+
+          {% if sale.free_delivery %}
+            <p><small class="text-muted">
+              Free delivery available!
+            </small></p>
+            <p style="margin-top: 28px;"><small class="text-muted">
+              Available till: <strong>{{ sale.exp_date }}</strong>
+            </small></p>
+          {% else %}
+            <p style="margin-top: 50px;"><small class="text-muted">
+              Available till: <strong>{{ sale.exp_date }}</strong>
+            </small></p>
+          {% endif %}
+        </a>
         {% endfor %}
-      </ul>
-    {% else %}
-      <p>No sales are available.</p>
-    {% endif %}
+      {% else %}
+        <p>No sales are available.</p>
+      {% endif %}
+    </div>
   </div>
 {% endblock %}

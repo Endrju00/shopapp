@@ -5,9 +5,10 @@
   <div class="card">
     <img src="{% static 'images/default.jpg' %}" class="card-img-top">
     <div class="card-body">
-      <h2 class="card-title">{{ sale.item.name }}</h2><br>
-      <h3 class="card-title">{{ sale.price }}zł</h3><br>
-
+      <h2 class="card-title">{{ sale.item.name }}</h2>
+      <h3 class="card-title" style="float: left; margin-right: 30px; margin-top: 8px;">{{ sale.price }}zł</h3>
+      <button type="button" class="btn btn-warning btn-lg" style="float: left; margin-right: 10px;">Buy Now!</button>
+      <button type="button" class="btn btn-warning btn-lg">Add to cart</button><br><br>
       <p class="card-text"><small class="text-muted">
         Posted: <strong>{{ sale.pub_date }}</strong>
         <span class="characteristic">Available till: <strong>{{ sale.exp_date }}</strong></span>
@@ -16,6 +17,7 @@
   </div><br>
 
   <div class="card">
+
     <div class="card-body">
       <h2 class="card-title">Parameters</h2>
       <p class="card-text second"><small class="text-muted">
@@ -24,6 +26,11 @@
         <span class="characteristic">Width: <strong>{{sale.item.width}}cm</strong></span>
         <span class="characteristic">Height: <strong>{{sale.item.height}}cm</strong></span>
         <span class="characteristic">Weight: <strong>{{ sale.item.weight }}g</strong></span>
+      </small></p>
+
+      <p class="card-text second"><small class="text-muted">
+        Color: <strong>{{ sale.item.color }}</strong>
+        <span class="characteristic" style="margin-left: 30px;">Condition: <strong>{{sale.item.get_condition}}</strong></span>
       </small></p>
     </div>
   </div><br>
