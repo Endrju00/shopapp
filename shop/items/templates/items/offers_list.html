@@ -6,9 +6,9 @@
       {% for sale in sales %}
         <a href="{% url 'items:detail' sale.id %}" class="list-group-item list-group-item-action offer">
           <p style="float: left;">
-            <img src="{% static 'images/default.jpg' %}" class="img-thumbnail" style="width: 250px; height: 250px; margin-right: 10px;">
+            <img src="{{ sale.first_image.url }}" class="img-thumbnail" style="width: 250px; height: 250px; margin-right: 10px; object-fit: cover;">
           </p>
-          <h1>{{ sale.item.name }}</h1>
+          <h1>{{ sale.title }}</h1>
           <p><small class="text-muted">
             Producer: <strong>{{ sale.item.producer }}</strong>
             <span class="characteristic">Condition: <strong>{{ sale.item.get_condition }}</strong></span>

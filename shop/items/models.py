@@ -35,6 +35,9 @@ class Item(models.Model):
 
 class SaleOffer(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    title = models.CharField(max_length=30, default=item.name)
+    first_image = models.ImageField(default='default.jpg', upload_to='items', help_text="This image will be shown in search results.")
+    second_image = models.ImageField(default='default.jpg', upload_to='items', help_text="Secondary image.")
     price = models.FloatField()
     description = models.CharField(max_length=300)
     quantity = models.PositiveIntegerField(default=1, help_text='Please pass the number of pieces in the package.')
