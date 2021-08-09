@@ -2,12 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.db.models import Q
 
-from .models import SaleOffer
+from .models import Item, SaleOffer
 
 # help functions
 def check_filters(filters):
     # Categories
-    if 'ALL' in filters["category"]:
+    if 'ALL' in filters["category"] or not filters["category"]:
         query = Q(category=SaleOffer.CATEGORY[0][0])
         for c in SaleOffer.CATEGORY[1:]:
             query |= Q(category=c[0])
@@ -22,6 +22,11 @@ def check_filters(filters):
     if filters["color"][0]:
         query &= Q(item__color__contains=filters["color"][0])
 
+    # Condition
+    if filters["condition"]:
+        query &= Q(item__condition=filters["condition"][0])
+
+
     sales = SaleOffer.objects.filter(query)
     return sales
 
@@ -32,6 +37,7 @@ def index(request):
         try:
             filters['category'] = request.POST.getlist('category')
             filters['color'] = request.POST.getlist('color')
+            filters['condition'] = request.POST.getlist('condition')
             sales = check_filters(filters)
         except:
             sales = SaleOffer.objects.order_by('-pub_date')
@@ -42,6 +48,7 @@ def index(request):
     context = {
         'sales': sales,
         'categories': SaleOffer.CATEGORY,
+        'conditions': Item.CONDITION,
     }
 
     return render(request, 'items/offers_list.html', context)

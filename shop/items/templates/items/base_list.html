@@ -17,8 +17,15 @@
             <label class="form-check-label" for={category.0}>{{ category.1 }}</label><br>
           {% endfor %}<br>
 
+          <h4 class="category">Condition</h4>
+          {% for condition in conditions %}
+            <input class="form-check-input" type="radio" id={{condition.0}} name="condition" value={{condition.0}}>
+            <label class="form-check-label" for={condition.0}>{{ condition.1 }}</label><br>
+          {% endfor %}<br>
+
           <h4 class="category">Color</h4>
           <input class="form-control" type="text" id=color name="color" style="width:90%;"><br>
+
         <input class="btn btn-warning" style="width:90%;" type="submit" value="Submit filters">
       </form>
     </div>
