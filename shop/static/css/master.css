@@ -7,9 +7,8 @@ div {
 }
 
 .list-group {
-  width: 30%;
-  margin-left: 10%;
-  margin-top: 10px;
+  width: 80%;
+  margin-right: 10%;
 }
 
 #top-item {
@@ -82,4 +81,43 @@ div {
 .form-check-input{
   width: 15px;
   height: 15px;
+}
+
+.filters, .offer {
+  border-radius: 5px;
+}
+
+.suggestions {
+  margin-left: 40%;
+  width: 90%;
+}
+
+.images{
+  width: 90%;
+  margin-left: 70px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.thumbnail{
+  width: 200px;
+  height: 200px;
+  margin-top: 20px;
+}
+
+.image{
+  border-radius: 10px;
+  height: 330px;
+  width: 250px;
+  float: left;
+  margin-left: 20px;
+  background: #f5f3f4;
+}
+
+.option{
+  width: 100%;
+  border-radius: 5px;
+  background: white;
+  border: 1px solid #f5f3f4;
+  height:470px;
 }
