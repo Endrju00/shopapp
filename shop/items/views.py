@@ -18,13 +18,21 @@ def check_filters(filters):
             for f in filters["category"][1:]:
                 query |= Q(category=f)
 
+    # Condition
+    if filters["condition"]:
+        query &= Q(item__condition=filters["condition"][0])
+
+    # Delivery
+    if filters["delivery"]:
+        query &= Q(free_delivery=True)
+
     # Color
     if filters["color"][0]:
         query &= Q(item__color__contains=filters["color"][0])
 
-    # Condition
-    if filters["condition"]:
-        query &= Q(item__condition=filters["condition"][0])
+    # Producer
+    if filters["producer"][0]:
+        query &= Q(item__producer__contains=filters["producer"][0])
 
 
     sales = SaleOffer.objects.filter(query)
@@ -36,8 +44,10 @@ def index(request):
         filters = {}
         try:
             filters['category'] = request.POST.getlist('category')
-            filters['color'] = request.POST.getlist('color')
             filters['condition'] = request.POST.getlist('condition')
+            filters['delivery'] = request.POST.getlist('free_delivery')
+            filters['color'] = request.POST.getlist('color')
+            filters['producer'] = request.POST.getlist('producer')
             sales = check_filters(filters)
         except:
             sales = SaleOffer.objects.order_by('-pub_date')
@@ -64,6 +74,7 @@ def filter(request, filter):
     context = {
         'sales': filtered_sales,
         'categories': SaleOffer.CATEGORY,
+        'conditions': Item.CONDITION,
     }
 
     return render(request, 'items/offers_list.html', context)
