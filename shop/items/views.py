@@ -6,27 +6,37 @@ from .models import SaleOffer
 
 # help functions
 def check_filters(filters):
-    if 'ALL' in filters:
-        sales = SaleOffer.objects.order_by('-pub_date')
+    # Categories
+    if 'ALL' in filters["category"]:
+        query = Q(category=SaleOffer.CATEGORY[0][0])
+        for c in SaleOffer.CATEGORY[1:]:
+            query |= Q(category=c[0])
     else:
-        query = Q(category=filters[0])
+        query = Q(category=filters["category"][0])
 
         if len(filters) > 1:
-            for f in filters[1:]:
+            for f in filters["category"][1:]:
                 query |= Q(category=f)
 
-        sales = SaleOffer.objects.filter(query)
+    # Color
+    if filters["color"][0]:
+        query &= Q(item__color__contains=filters["color"][0])
+
+    sales = SaleOffer.objects.filter(query)
     return sales
 
 # Create your views here.
 def index(request):
     if request.method == 'POST':
+        filters = {}
         try:
-            filters = request.POST.getlist('filter')
+            filters['category'] = request.POST.getlist('category')
+            filters['color'] = request.POST.getlist('color')
             sales = check_filters(filters)
         except:
             sales = SaleOffer.objects.order_by('-pub_date')
-    else:
+
+    elif request.method == 'GET':
         sales = SaleOffer.objects.order_by('-pub_date')
 
     context = {

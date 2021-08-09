@@ -64,3 +64,8 @@ div {
 #carouselExampleIndicators{
   height: 100%;
 }
+
+.category{
+  margin-right: 10%;
+  text-align: center;
+}
