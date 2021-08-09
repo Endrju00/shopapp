@@ -73,3 +73,13 @@ div {
 .form-inline{
   width: 150%;
 }
+
+.form-check-label{
+  margin-bottom: 4px;
+  font-size: 1.1rem;
+}
+
+.form-check-input{
+  width: 15px;
+  height: 15px;
+}

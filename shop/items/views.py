@@ -7,7 +7,7 @@ from .models import Item, SaleOffer
 # help functions
 def check_filters(filters):
     # Search bar functionality
-    if filters['search-bar'][0]:
+    if filters['search-bar']:
         words = filters['search-bar'][0].split()
         query = Q(title__contains=words[0])
 
