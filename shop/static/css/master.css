@@ -69,3 +69,7 @@ div {
   margin-right: 10%;
   text-align: center;
 }
+
+.form-inline{
+  width: 150%;
+}

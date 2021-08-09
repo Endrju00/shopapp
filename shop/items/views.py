@@ -6,6 +6,17 @@ from .models import Item, SaleOffer
 
 # help functions
 def check_filters(filters):
+    # Search bar functionality
+    if filters['search-bar'][0]:
+        words = filters['search-bar'][0].split()
+        query = Q(title__contains=words[0])
+
+        for word in words[1:]:
+            query |= Q(title__contains=word)
+
+        sales = SaleOffer.objects.filter(query)
+        return sales
+
     # Categories
     if 'ALL' in filters["category"] or not filters["category"]:
         query = Q(category=SaleOffer.CATEGORY[0][0])
@@ -43,6 +54,7 @@ def index(request):
     if request.method == 'POST':
         filters = {}
         try:
+            filters['search-bar'] = request.POST.getlist('search-bar')
             filters['category'] = request.POST.getlist('category')
             filters['condition'] = request.POST.getlist('condition')
             filters['delivery'] = request.POST.getlist('free_delivery')

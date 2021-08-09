@@ -30,8 +30,14 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Pricing</a>
             </li>
+
           </ul>
         </div>
+        <form class="form-inline" action="{% url 'items:index' %}" method="post">
+          {% csrf_token %}
+          <input class="form-control mr-sm-2" name="search-bar" type="search" placeholder="Search" aria-label="Search" style="width: 50%;">
+          <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+        </form>
       </div>
     </nav><br>
 
