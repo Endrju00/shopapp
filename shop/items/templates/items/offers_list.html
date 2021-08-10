@@ -3,7 +3,7 @@
 {% block items %}
   <div class="items">
     {% if sales %}
-      {% for sale in sales %}
+      {% for sale in page_obj %}
         <a href="{% url 'items:detail' sale.id %}" class="list-group-item list-group-item-action offer">
           <p style="float: left;">
             <img src="{{ sale.first_image.url }}" class="img-thumbnail" style="width: 250px; height: 250px; margin-right: 10px; object-fit: cover;">
@@ -17,7 +17,7 @@
 
           <h2>{{ sale.price }}zł</h2>
 
-          <button type="button" class="btn btn-warning">Buy Now!</button>
+          <button type="button" class="btn btn-warning"><span class="fa fa-dollar"></span> Buy Now!</button>
 
           {% if sale.free_delivery %}
             <p><small class="text-muted">
@@ -33,6 +33,25 @@
           {% endif %}
         </a>
       {% endfor %}
+
+      <div class="pagination" style="width: 100%;">
+        <span class="step-links" style="margin-left: auto; margin-right: auto;">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="btn btn-outline-dark"><span class="fa fa-step-backward"></span> First</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-dark"><span class="fa fa-backward"></span> Previous</a>
+            {% endif %}
+
+            <span class="btn btn-warning">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-dark"><span class="fa fa-step-forward"></span> Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-dark"><span class="fa fa-forward"></span> Last</a>
+            {% endif %}
+        </span>
+      </div><br>
+
     {% else %}
       <h3>No sales are available.</h3>
     {% endif %}

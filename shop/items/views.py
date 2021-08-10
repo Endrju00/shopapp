@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
+from django.core.paginator import Paginator
 from django.db.models import Q
 
 from .models import Item, SaleOffer
@@ -67,10 +68,16 @@ def index(request):
     elif request.method == 'GET':
         sales = SaleOffer.objects.order_by('-pub_date')
 
+    paginator = Paginator(sales, 6)
+    print(paginator)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'sales': sales,
         'categories': SaleOffer.CATEGORY,
         'conditions': Item.CONDITION,
+        'page_obj': page_obj,
     }
 
     return render(request, 'items/offers_list.html', context)
