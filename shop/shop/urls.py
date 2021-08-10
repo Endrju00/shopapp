@@ -19,9 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from . import views
+from accounts import views as accounts_views
+
 
 urlpatterns = [
     path('', views.HomePage.as_view(), name='home'),
+    path('register/', accounts_views.register, name='register'),
     path('sales/', include('items.urls')),
     path('admin/', admin.site.urls),
 ]
