@@ -89,10 +89,8 @@ def detail(request, sale_id):
 
 def filter(request, filter):
     filtered_sales = SaleOffer.objects.filter(category=filter)
-    print(filtered_sales)
 
     paginator = Paginator(filtered_sales, 6)
-    print(paginator)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
