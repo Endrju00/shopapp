@@ -69,7 +69,6 @@ def index(request):
         sales = SaleOffer.objects.order_by('-pub_date')
 
     paginator = Paginator(sales, 6)
-    print(paginator)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -90,10 +89,18 @@ def detail(request, sale_id):
 
 def filter(request, filter):
     filtered_sales = SaleOffer.objects.filter(category=filter)
+    print(filtered_sales)
+
+    paginator = Paginator(filtered_sales, 6)
+    print(paginator)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'sales': filtered_sales,
         'categories': SaleOffer.CATEGORY,
         'conditions': Item.CONDITION,
+        'page_obj': page_obj,
     }
 
     return render(request, 'items/offers_list.html', context)

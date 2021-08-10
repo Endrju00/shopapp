@@ -33,7 +33,7 @@
               <a class="nav-link" href="{% url 'items:index' %}">Sale Offers</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
+              <a class="nav-link" href="{% url 'home' %}">Hot Deals</a>
             </li>
 
           </ul>
@@ -43,7 +43,23 @@
           <input class="form-control mr-sm-2" name="search-bar" type="search" placeholder="Search" aria-label="Search" style="width: 50%;">
           <button class="btn btn-outline-warning my-2 my-sm-0" type="submit"><span class="fa fa-search"></span> Search</button>
         </form>
-      </div>
+        <div class="collapse navbar-collapse" style="width: 28%;">
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+              <li class="nav-item" style="margin-left: 110px;">
+                <a class="nav-link" href="#">Logout</a>
+              </li>
+            {% else %}
+              <li class="nav-item" style="margin-left: 50px;">
+                <a class="nav-link" href="#">Log In</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Sign Up</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+    </div>
     </nav><br>
 
     <div class="content"><br><br>
