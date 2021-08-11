@@ -33,7 +33,7 @@
               <a class="nav-link" href="{% url 'items:index' %}">Sale Offers</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'home' %}">Hot Deals</a>
+              <a class="nav-link" href="{% url 'home' %}">Hot Deals <span class="fa fa-fire" style="font-size: 1.2rem;"></a>
             </li>
 
           </ul>
@@ -47,10 +47,13 @@
           <ul class="navbar-nav">
             {% if user.is_authenticated %}
               <li class="nav-item" style="margin-left: 50px;">
-                <a class="nav-link" href="#">Cart</a>
+                <a class="nav-link" href="#"><span class="fa fa-shopping-cart" style="margin-right: 10px;font-size: 1.3rem;"></span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                <a class="nav-link" href="#"><span class="fa fa-user" style="margin-right: 10px; font-size: 1.3rem;"></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}"><span class="fa fa-sign-out" style="margin-right: 10px; font-size: 1.3rem;"></a>
               </li>
             {% else %}
               <li class="nav-item" style="margin-left: 50px;">

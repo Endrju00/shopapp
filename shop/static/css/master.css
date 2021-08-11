@@ -6,6 +6,10 @@ div {
   width: 70%;
 }
 
+a {
+  color: orange;
+}
+
 .list-group {
   width: 80%;
   margin-right: 10%;
@@ -121,5 +125,5 @@ div {
   border-radius: 5px;
   background: white;
   border: 1px solid #f5f3f4;
-  height:470px;
+  height: 470px;
 }

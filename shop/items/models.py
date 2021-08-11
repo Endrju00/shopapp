@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Item(models.Model):
@@ -34,6 +34,7 @@ class Item(models.Model):
 
 
 class SaleOffer(models.Model):
+    dealer = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     title = models.CharField(max_length=30, default=item.name)
     first_image = models.ImageField(default='default.jpg', upload_to='items', help_text="This image will be shown in search results.")
