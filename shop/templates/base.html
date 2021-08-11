@@ -46,12 +46,15 @@
         <div class="collapse navbar-collapse" style="width: 28%;">
           <ul class="navbar-nav">
             {% if user.is_authenticated %}
-              <li class="nav-item" style="margin-left: 110px;">
-                <a class="nav-link" href="#">Logout</a>
+              <li class="nav-item" style="margin-left: 50px;">
+                <a class="nav-link" href="#">Cart</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
               </li>
             {% else %}
               <li class="nav-item" style="margin-left: 50px;">
-                <a class="nav-link" href="#">Log In</a>
+                <a class="nav-link" href="{% url 'login' %}">Log In</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
