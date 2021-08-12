@@ -37,8 +37,8 @@
       <div class="pagination" style="width: 100%;">
         <span class="step-links" style="margin-left: auto; margin-right: auto;">
             {% if page_obj.has_previous %}
-                <a href="?page=1" class="btn btn-outline-dark"><span class="fa fa-step-backward"></span> First</a>
-                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-dark"><span class="fa fa-backward"></span> Previous</a>
+                <a href="?page=1" class="btn btn-outline-dark"><span class="fa fa-backward"></span> First</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-dark"><span class="fa fa-step-backward"></span> Previous</a>
             {% endif %}
 
             <span class="btn btn-warning">

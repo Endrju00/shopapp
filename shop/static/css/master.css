@@ -127,3 +127,17 @@ a {
   border: 1px solid #f5f3f4;
   height: 470px;
 }
+
+.dropdown-menu{
+  border: 1px solid gray;
+  text-align: center;
+  position: relative;
+}
+
+#cart{
+  left: -60px;
+}
+
+#user_panel {
+  left: -65px;
+}
