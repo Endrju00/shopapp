@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserRegisterForm
 
+from .models import Profile
+from items.models import SaleOffer
 
 # Create your views here.
 def register(request):
@@ -20,3 +22,13 @@ def register(request):
     }
 
     return render(request, 'accounts/signup.html', context)
+
+
+def profile(request):
+    if request.user.is_authenticated:
+        context = {
+            'user': request.user,
+            'sales': SaleOffer.objects.filter(dealer=request.user),
+        }
+        print(context['sales'])
+    return render(request, 'accounts/profile.html', context)

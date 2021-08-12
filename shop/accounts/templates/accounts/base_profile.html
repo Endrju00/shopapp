@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <div class="panel position-fixed" style="border: 1px solid black; float: left; margin-left: 15%; width: 18%;">
+    <h1>panel</h1>
+  </div>
+
+  <div class="profile" style="float: left; margin-left:50%;">
+    {% block profile %}
+    {% endblock %}
+  </div>
+
+{% endblock %}

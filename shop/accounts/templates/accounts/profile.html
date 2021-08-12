@@ -1,0 +1,38 @@
+{% extends 'accounts/base_profile.html' %}
+
+{% block profile %}
+  <div class="container card" id="profile">
+    <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Profile</legend>
+    <legend><strong>Username: </strong>{{ user.username }}</legend>
+    <legend><strong>E-mail: </strong>{{ user.email }}</legend>
+    <legend><strong>Rating: </strong>{{ user.profile.rating }}/5 <span class="fa fa-star" style="font-size: 1.2rem;"></span></legend>
+    <legend><small class="text-muted">Date joined: {{ user.date_joined }}</small></legend>
+    <legend><small class="text-muted">Last login: {{ user.last_login }}</small></legend>
+  </div><br>
+  <div class="container card" id="mysales">
+    <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">My sales</legend>
+    {% if sales %}
+      {% for sale in sales %}
+      <div class="container">
+        <a class="list-group-item list-group-item-action" href="{% url 'items:detail' sale.id %}" style="height:180px;">
+          <img src="{{ sale.first_image.url }}" class="img-thumbnail float-left" style="width: 150px; height:150px; object-fit: cover; margin-right: 10px;">
+          <h4>{{ sale.title }}</h4>
+          <legend>{{ sale.price }}zł</legend>
+          <p><small class="text-muted">
+            Producer: <strong>{{ sale.item.producer }}</strong>
+            <span class="characteristic">Condition: <strong>{{ sale.item.get_condition }}</strong></span>
+            <span class="characteristic">Number of pieces in the package: <strong>{{ sale.quantity }}</strong></span>
+          </small></p>
+          <p><small class="text-muted">
+            Color: <strong>{{ sale.item.color }}</strong>
+          </small></p>
+        </a>
+      </div><br>
+      {% endfor %}
+      <br>
+    {% else %}
+      <legend><strong>No sales available.</strong></legend>
+    {% endif %}
+  </div>
+
+{% endblock %}

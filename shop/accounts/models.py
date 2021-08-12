@@ -10,6 +10,5 @@ class Profile(models.Model):
         validators = [MaxValueValidator(5), MinValueValidator(1)]
     )
 
-
     def __str__(self):
         return f'{self.user.username} Profile'
