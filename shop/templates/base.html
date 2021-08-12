@@ -87,12 +87,11 @@
     <div class="content"><br><br>
       {% if messages %}
         {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}" style="width: 78%; margin-left: 41%;">
+          <div class="alert alert-{{ message.tags }}" style="width: 88%; margin-left: 30%">
             {{ message }}
           </div>
         {% endfor %}
       {% endif %}
-
       {% block content %}
       {% endblock %}
     </div>
