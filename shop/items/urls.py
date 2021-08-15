@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('detail/<int:sale_id>/', views.detail, name='detail'),
     path('filtered/<str:filter>/', views.filter, name='filter'),
+    path('create/', views.create, name='create')
 ]
 
 if settings.DEBUG:

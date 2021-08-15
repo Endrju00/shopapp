@@ -30,5 +30,5 @@ def profile(request):
             'user': request.user,
             'sales': SaleOffer.objects.filter(dealer=request.user),
         }
-        print(context['sales'])
+        
     return render(request, 'accounts/profile.html', context)

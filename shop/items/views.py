@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from django.core.paginator import Paginator
 from django.db.models import Q
 
 from .models import Item, SaleOffer
+from .forms import SaleOfferForm
 
 # help functions
 def check_filters(filters):
@@ -102,3 +103,20 @@ def filter(request, filter):
     }
 
     return render(request, 'items/offers_list.html', context)
+
+
+def create(request):
+    if request.method == 'POST':
+        form = SaleOfferForm(request.POST, request.FILES)
+        if form.is_valid():
+            sale = form.save(commit=False)
+            sale.dealer = request.user
+            sale.save()
+            return redirect('items:index')
+    else:
+        form = SaleOfferForm()
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'items/create.html', context)
