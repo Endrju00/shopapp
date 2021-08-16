@@ -4,7 +4,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm
 
 from .models import Profile
-from items.models import SaleOffer
+from items.models import SaleOffer, Item
 
 # Create your views here.
 def register(request):
@@ -29,6 +29,7 @@ def profile(request):
         context = {
             'user': request.user,
             'sales': SaleOffer.objects.filter(item__dealer=request.user),
+            'items': Item.objects.filter(dealer=request.user),
         }
 
     return render(request, 'accounts/profile.html', context)

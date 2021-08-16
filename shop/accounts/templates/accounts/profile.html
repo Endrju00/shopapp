@@ -9,6 +9,33 @@
     <legend><small class="text-muted">Date joined: {{ user.date_joined }}</small></legend>
     <legend><small class="text-muted">Last login: {{ user.last_login }}</small></legend>
   </div><br>
+
+  <div class="container card" id="myitems">
+    <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">My items</legend>
+    {% if items %}
+      {% for item in items %}
+      <div class="container">
+        <li class="list-group-item">
+          <h4>{{ item.name }} {{ item.producer }}</h4><br>
+          <p><small class="text-muted">
+            Condition: <strong>{{ item.get_condition }}</strong>
+            <span class="characteristic">Weight: <strong>{{ item.weight }}g</strong></span>
+            <span class="characteristic">Height: <strong>{{ item.height }}cm</strong></span>
+            <span class="characteristic">Length: <strong>{{ item.length }}cm</strong></span>
+            <span class="characteristic">Width: <strong>{{ item.width }}cm</strong></span>
+          </small></p>
+          <p><small class="text-muted">
+            Color: <strong>{{ item.color }}</strong>
+          </small></p>
+        </li>
+      </div>
+      {% endfor %}
+      <br>
+    {% else %}
+      <legend><strong>No items available.</strong></legend>
+    {% endif %}
+  </div><br>
+
   <div class="container card" id="mysales">
     <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">My sales</legend>
     {% if sales %}
@@ -27,7 +54,7 @@
             Color: <strong>{{ sale.item.color }}</strong>
           </small></p>
         </a>
-      </div><br>
+      </div>
       {% endfor %}
       <br>
     {% else %}
