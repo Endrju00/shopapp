@@ -28,7 +28,7 @@ def profile(request):
     if request.user.is_authenticated:
         context = {
             'user': request.user,
-            'sales': SaleOffer.objects.filter(dealer=request.user),
+            'sales': SaleOffer.objects.filter(item__dealer=request.user),
         }
-        
+
     return render(request, 'accounts/profile.html', context)

@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 
 # Create your models here.
 class Item(models.Model):
+    dealer = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=50)
     producer = models.CharField(max_length=50)
     weight = models.PositiveIntegerField(help_text='Please pass the weight in grams.')
@@ -36,7 +37,6 @@ class Item(models.Model):
 
 
 class SaleOffer(models.Model):
-    dealer = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     title = models.CharField(max_length=30, default=item.name)
     first_image = models.ImageField(default='default.jpg', upload_to='items', help_text="This image will be shown in search results.")
