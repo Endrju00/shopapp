@@ -4,7 +4,7 @@
 {% block content %}
   <div class="container" style="margin-top:3%;">
 
-    <div class="position-fixed" style="width: 22%; margin-left: 3%;">
+    <div class="position-fixed" style="width: 22%; margin-left: 9%;">
       <ul class="list-group">
         <li class="list-group-item active" aria-current="true" id="top-item" style="font-size: 1.2rem;"><span class="fa fa-filter"></span> Categories</li>
         <a href="{% url 'items:index' %}" class="list-group-item list-group-item-action">All</a>
@@ -16,7 +16,7 @@
       </ul>
     </div>
 
-    <div class="suggestions">
+    <div class="suggestions" style="margin-left: 47%;">
       <h2>This might interest you...</h2>
       <div style="width: auto; text-align: center; ">
         {% for key, category in categories.items %}
