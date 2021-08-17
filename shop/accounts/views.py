@@ -27,12 +27,11 @@ def register(request):
 
 
 def profile(request, user_id):
-    if request.user.is_authenticated:
-        context = {
-            'profile': User.objects.get(id=user_id),
-            'user': request.user,
-            'sales': SaleOffer.objects.filter(item__dealer__id=user_id),
-            'items': Item.objects.filter(dealer__id=user_id),
-        }
+    context = {
+        'profile': User.objects.get(id=user_id),
+        'user': request.user,
+        'sales': SaleOffer.objects.filter(item__dealer__id=user_id),
+        'items': Item.objects.filter(dealer__id=user_id),
+    }
 
     return render(request, 'accounts/profile.html', context)
