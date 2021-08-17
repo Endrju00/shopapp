@@ -14,7 +14,7 @@
     </form>
     <div class="border-top pt-2 mb-1" style ="margin-bottom: 20px;">
       <small class="text-muted">
-        Need to check your items? <a class='ml-2' href="{% url 'profile' %}">Go to My Items</a>
+        Need to check your items? <a class='ml-2' href="{% url 'profile' user.id %}#myitems">See your Items</a>
       </small>
     </div>
   </div><br>

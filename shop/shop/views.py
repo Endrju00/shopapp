@@ -33,5 +33,6 @@ class HomePage(TemplateView):
         context = super().get_context_data(**kwargs)
         context['categories'] = dict(SaleOffer.CATEGORY)
         context['suggestions'] = {}
+        context['user'] = self.request.user
         get_suggestions(SaleOffer.objects.all(), context['categories'], context['suggestions'])
         return context

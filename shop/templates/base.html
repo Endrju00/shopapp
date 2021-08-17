@@ -63,9 +63,9 @@
                   <span class="fa fa-user" style="margin-right: 10px; font-size: 1.3rem;">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="user_panel">
-                  <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
-                  <a class="dropdown-item" href="{% url 'profile' %}#myitems">My items</a>
-                  <a class="dropdown-item" href="{% url 'profile' %}#mysales">My sales</a>
+                  <a class="dropdown-item" href="{% url 'profile' user.id %}">Profile</a>
+                  <a class="dropdown-item" href="{% url 'profile' user.id %}#myitems">My items</a>
+                  <a class="dropdown-item" href="{% url 'profile' user.id %}#mysales">My sales</a>
                   <a class="dropdown-item" href="{% url 'items:add_item' %}">Add an item</a>
                   <a class="dropdown-item" href="{% url 'items:add_sale' %}">Create an Offer</a>
                   <a class="dropdown-item" href="#">My shopping</a>

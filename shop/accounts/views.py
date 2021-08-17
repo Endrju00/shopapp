@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserRegisterForm
+from django.contrib.auth.models import User
+
 
 from .models import Profile
 from items.models import SaleOffer, Item
@@ -24,12 +26,13 @@ def register(request):
     return render(request, 'accounts/signup.html', context)
 
 
-def profile(request):
+def profile(request, user_id):
     if request.user.is_authenticated:
         context = {
+            'profile': User.objects.get(id=user_id),
             'user': request.user,
-            'sales': SaleOffer.objects.filter(item__dealer=request.user),
-            'items': Item.objects.filter(dealer=request.user),
+            'sales': SaleOffer.objects.filter(item__dealer__id=user_id),
+            'items': Item.objects.filter(dealer__id=user_id),
         }
 
     return render(request, 'accounts/profile.html', context)

@@ -72,7 +72,7 @@ def index(request):
     elif request.method == 'GET':
         sales = SaleOffer.objects.order_by('-pub_date')
 
-    paginator = Paginator(sales, 6)
+    paginator = Paginator(sales, 60)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 

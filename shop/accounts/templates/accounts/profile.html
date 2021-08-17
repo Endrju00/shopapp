@@ -3,13 +3,13 @@
 {% block profile %}
   <div class="container card" id="profile">
     <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Profile</legend>
-    <legend><strong>Username: </strong>{{ user.username }}</legend>
-    <legend><strong>E-mail: </strong>{{ user.email }}</legend>
-    <legend><strong>Rating: </strong>{{ user.profile.rating }}/5 <span class="fa fa-star" style="font-size: 1.2rem;"></span></legend>
-    <legend><small class="text-muted">Date joined: {{ user.date_joined }}</small></legend>
-    <legend><small class="text-muted">Last login: {{ user.last_login }}</small></legend>
+    <legend><strong>Username: </strong>{{ profile.username }}</legend>
+    <legend><strong>E-mail: </strong>{{ profile.email }}</legend>
+    <legend><strong>Rating: </strong>{{ profile.profile.rating }}/5 <span class="fa fa-star" style="font-size: 1.2rem;"></span></legend>
+    <legend><small class="text-muted">Date joined: {{ profile.date_joined }}</small></legend>
+    <legend><small class="text-muted">Last login: {{ profile.last_login }}</small></legend>
   </div><br>
-
+  {% if user.id == profile.id %}
   <div class="container card" id="myitems">
     <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">My items</legend>
     {% if items %}
@@ -35,9 +35,10 @@
       <legend><strong>No items available.</strong></legend>
     {% endif %}
   </div><br>
+  {% endif %}
 
   <div class="container card" id="mysales">
-    <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">My sales</legend>
+    <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Sales</legend>
     {% if sales %}
       {% for sale in sales %}
       <div class="container">
@@ -54,12 +55,12 @@
             Color: <strong>{{ sale.item.color }}</strong>
           </small></p>
         </a>
-      </div>
+      </div><br>
       {% endfor %}
-      <br>
+
     {% else %}
       <legend><strong>No sales available.</strong></legend>
     {% endif %}
-  </div>
+  </div><br>
 
 {% endblock %}
