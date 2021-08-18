@@ -55,13 +55,14 @@ a {
   margin-left: 8%;
 }
 
-.carousel-control-prev, .carousel-control-next{
-  background: #e9ecef;
+.carousel-control-next, .carousel-control-prev{
+  background: #e5e5e5;
+  opacity:0.2;
 }
 
-.carousel-control-prev:hover, .carousel-control-next:hover {
-  opacity: 0.01;
-  background: #e9ecef;
+.carousel-control-next:hover, .carousel-control-prev:hover{
+  background: #e5e5e5;
+  opacity:0.3;
 }
 
 #carouselExampleIndicators{
