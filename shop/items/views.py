@@ -8,6 +8,7 @@ from django.contrib import messages
 
 from .models import Item, SaleOffer
 from .forms import SaleOfferForm, ItemForm
+from accounts.models import Profile
 
 # help functions
 def check_filters(filters):
@@ -83,12 +84,26 @@ def index(request):
         'page_obj': page_obj,
     }
 
+    if request.user.is_authenticated:
+        context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
+    else:
+        context['cart_items'] = ['Log in']
+
     return render(request, 'items/offers_list.html', context)
 
 
 def detail(request, sale_id):
     sale = get_object_or_404(SaleOffer, pk=sale_id)
-    return render(request, 'items/detail.html', {'sale': sale})
+    context = {
+        'sale': sale,
+    }
+
+    if request.user.is_authenticated:
+        context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
+    else:
+        context['cart_items'] = ['Log in']
+
+    return render(request, 'items/detail.html', context)
 
 
 def filter(request, filter):
@@ -104,6 +119,11 @@ def filter(request, filter):
         'conditions': Item.CONDITION,
         'page_obj': page_obj,
     }
+
+    if request.user.is_authenticated:
+        context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
+    else:
+        context['cart_items'] = ['Log in']
 
     return render(request, 'items/offers_list.html', context)
 
@@ -121,6 +141,7 @@ def add_item(request):
 
     context = {
         'form': form,
+        'cart_items': Profile.objects.get(user=request.user).cart_items.all()
     }
 
     return render(request, 'items/add_item.html', context)
@@ -136,6 +157,7 @@ def create(request):
         form = SaleOfferForm(request.user)
     context = {
         'form': form,
+        'cart_items': Profile.objects.get(user=request.user).cart_items.all()
     }
 
     return render(request, 'items/create.html', context)

@@ -4,6 +4,7 @@ from django import template
 
 
 from items.models import SaleOffer
+from accounts.models import Profile
 
 
 # Help functions
@@ -34,5 +35,11 @@ class HomePage(TemplateView):
         context['categories'] = dict(SaleOffer.CATEGORY)
         context['suggestions'] = {}
         context['user'] = self.request.user
+
+        if self.request.user.is_authenticated:
+            context['cart_items'] = Profile.objects.get(user=self.request.user).cart_items.all()
+        else:
+            context['cart_items'] = ['Log in']
+
         get_suggestions(SaleOffer.objects.all(), context['categories'], context['suggestions'])
         return context

@@ -53,9 +53,10 @@
                 <span class="fa fa-shopping-cart" style="margin-right: 10px; font-size: 1.3rem;">
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="cart">
-                <a class="dropdown-item" href="#">Item Item One</a>
-                <a class="dropdown-item" href="#">Item Item Two</a>
-                <a class="btn btn-warning" href="#" style="width: 90%; margin-top:10%;">Go to cart</a>
+                {% for item in cart_items %}
+                  <a class="dropdown-item" href="{% url 'items:detail' item.id %}">{{ item.item.name }} {{ item.item.producer }}</a>
+                {% endfor %}
+                <a class="btn btn-warning" href="{% url 'cart' %}" style="width: 90%; margin-top:10%;">Go to cart</a>
               </div>
             </li>
               <li class="nav-item dropdown" >
@@ -87,16 +88,19 @@
     </div>
     </nav><br>
 
-    <div class="content"><br><br>
+    <div class="content" style="width: 80%; margin-left: 10%;"><br><br>
       {% if messages %}
         {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}" style="width: 88%; margin-left: 30%">
+          <div class="alert alert-{{ message.tags }}" style="width: 100%;">
             {{ message }}
           </div>
         {% endfor %}
       {% endif %}
-      {% block content %}
-      {% endblock %}
+
+      <div class="" style="width:100%;">
+        {% block content %}
+        {% endblock %}
+      </div>
     </div>
   </body>
 </html>

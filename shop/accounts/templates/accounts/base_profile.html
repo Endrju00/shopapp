@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <div class="panel position-fixed" style="float: left; margin-left: 18%; width: 20%;">
+  <div class="panel position-fixed" style="float: left; width: 23%;">
     {% if user.is_authenticated %}
       <ul class="list-group">
         <li class="list-group-item active" aria-current="true" id="top-item" style="font-size: 1.2rem;"><span class="fa fa-user"></span> User Panel</li>
@@ -35,15 +35,15 @@
       <a href="{% url 'profile' profile.id %}#mysales" class="list-group-item list-group-item-action">
         {% if user.id != profile.id %} {{profile.username}} {% else %} My {% endif %}
         Sales</a>
-      <a href="{% url 'login'%}" class="list-group-item list-group-item-action">Add an item</a>
-      <a href="{% url 'login'%}" class="list-group-item list-group-item-action">Create an Offer</a>
-      <a href="{% url 'login'%}" class="list-group-item list-group-item-action">My shopping</a>
-      <a href="{% url 'login'%}" class="list-group-item list-group-item-action">Go to cart</a>
+      <a href="{% url 'login' %}" class="list-group-item list-group-item-action">Add an item</a>
+      <a href="{% url 'login' %}" class="list-group-item list-group-item-action">Create an Offer</a>
+      <a href="{% url 'login' %}" class="list-group-item list-group-item-action">My bought items</a>
+      <a href="{% url 'cart' %}" class="list-group-item list-group-item-action">Go to cart</a>
     </ul>
     {% endif %}
   </div>
 
-  <div class="profile" style="float: left; margin-left:50%;">
+  <div class="profile" style="float: left; margin-left:25%; width: 75%;">
     {% block profile %}
     {% endblock %}
   </div>

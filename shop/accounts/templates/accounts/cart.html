@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container card" id="cart_items" style="width: 70%; float: left;">
+    <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Cart</legend>
+    {% if sales %}
+      {% for sale in sales %}
+      <div class="container">
+        <a class="list-group-item list-group-item-action" href="{% url 'items:detail' sale.id %}" style="height:180px;">
+          <img src="{{ sale.first_image.url }}" class="img-thumbnail float-left" style="width: 150px; height:150px; object-fit: cover; margin-right: 10px;">
+          <h4>{{ sale.title }}</h4>
+          <legend>{{ sale.price }}zł</legend>
+          <p><small class="text-muted">
+            Producer: <strong>{{ sale.item.producer }}</strong>
+            <span class="characteristic">Condition: <strong>{{ sale.item.get_condition }}</strong></span>
+            <span class="characteristic">Number of pieces in the package: <strong>{{ sale.quantity }}</strong></span>
+          </small></p>
+          <p><small class="text-muted">
+            Color: <strong>{{ sale.item.color }}</strong>
+          </small></p>
+        </a>
+      </div><br>
+      {% endfor %}
+
+      <div class="border-top pt-2 mb-1" style="margin-bottom: 20px;">
+        <small class="text-muted">
+          Want something else? <a class='ml-2' href="{% url 'items:index' %}">See the sale offers.</a>
+        </small>
+      </div>
+
+    {% else %}
+      <h2>Your cart is empty.</h2><br>
+      <div class="border-top pt-2 mb-1" style ="margin-bottom: 20px;">
+        <small class="text-muted">
+          Nothing here? <a class='ml-2' href="{% url 'items:index' %}">See the sale offers.</a>
+        </small>
+      </div>
+    {% endif %}
+
+  </div>
+
+  <div class="container card" id="cart_items" style="width:29%;">
+    <h1>Summary</h1>
+    <h1>Summary</h1>
+    <h1>Summary</h1>
+    <h1>Summary</h1>
+    <h1>Summary</h1>
+    <h1>Summary</h1>
+    <h1>Summary</h1>
+    <h1>Summary</h1>
+    <h1>Summary</h1>
+  </div>
+{% endblock %}

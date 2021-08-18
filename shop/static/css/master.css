@@ -20,12 +20,6 @@ a {
   border: #faa307;
 }
 
-.sale {
-  margin-top: 20px;
-  margin-left: 40%;
-  width: 100%;
-}
-
 .characteristic{
   margin-left: 40px;
 }
@@ -35,8 +29,8 @@ a {
 }
 
 .items {
-  margin-left: 47%;
-  width: 90%;
+  margin-left: 28%;
+  width: 72%;
 }
 
 .offer {
@@ -51,8 +45,7 @@ a {
 
 .filters{
   float: left;
-  width: 30%;
-  margin-left: 8%;
+  width: 26%;
 }
 
 .carousel-control-next, .carousel-control-prev{
@@ -70,7 +63,8 @@ a {
 }
 
 .category{
-  margin-right: 10%;
+  position: relative;
+  left: -15px;
   text-align: center;
 }
 
@@ -93,8 +87,8 @@ a {
 }
 
 .suggestions {
-  margin-left: 40%;
-  width: 90%;
+  margin-left: 25%;
+  width: 75%;
 }
 
 .images{
@@ -141,4 +135,8 @@ a {
 
 #user_panel {
   left: -65px;
+}
+
+#cart_items{
+  width: 80%;
 }

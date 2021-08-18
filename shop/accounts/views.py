@@ -34,4 +34,23 @@ def profile(request, user_id):
         'items': Item.objects.filter(dealer__id=user_id),
     }
 
+    if request.user.is_authenticated:
+        context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
+    else:
+        context['cart_items'] = ['Log in']
+
     return render(request, 'accounts/profile.html', context)
+
+
+def cart(request):
+    user_profile = Profile.objects.get(user=request.user)
+    context = {
+        'sales': user_profile.cart_items.all(),
+    }
+
+    if request.user.is_authenticated:
+        context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
+    else:
+        context['cart_items'] = ['Log in']
+
+    return render(request, 'accounts/cart.html', context)
