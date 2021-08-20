@@ -61,17 +61,38 @@ def check_filters(filters):
 # Create your views here.
 def index(request):
     if request.method == 'POST':
-        filters = {}
-        try:
-            filters['search-bar'] = request.POST.getlist('search-bar')
-            filters['category'] = request.POST.getlist('category')
-            filters['condition'] = request.POST.getlist('condition')
-            filters['delivery'] = request.POST.getlist('free_delivery')
-            filters['color'] = request.POST.getlist('color')
-            filters['producer'] = request.POST.getlist('producer')
-            sales = check_filters(filters)
-        except:
-            sales = SaleOffer.objects.order_by('-pub_date')
+        if request.POST.get('submit_filters'):
+            filters = {}
+            try:
+                filters['search-bar'] = request.POST.getlist('search-bar')
+                filters['category'] = request.POST.getlist('category')
+                filters['condition'] = request.POST.getlist('condition')
+                filters['delivery'] = request.POST.getlist('free_delivery')
+                filters['color'] = request.POST.getlist('color')
+                filters['producer'] = request.POST.getlist('producer')
+                sales = check_filters(filters)
+            except:
+                sales = SaleOffer.objects.order_by('-pub_date')
+
+        elif request.POST.get('buy'):
+            if request.user.is_authenticated:
+                sale = SaleOffer.objects.get(id=request.POST.get('buy'))
+                form = AddToCartForm(request.POST)
+                if form.is_valid():
+                    item = form.save(commit=False)
+                    item.profile = Profile.objects.get(user=request.user)
+                    item.item = sale
+                    item.save()
+
+                    if request.POST.get("buy"):
+                        return redirect('cart')
+
+                    elif request.POST.get('add'):
+                        messages.success(request, 'An item has been added to the cart.')
+                        return HttpResponseRedirect(reverse('items:detail', args=[sale.id]))
+            else:
+                messages.warning(request, 'You must be logged in to buy an item.')
+                return redirect('login')
 
     elif request.method == 'GET':
         sales = SaleOffer.objects.order_by('-pub_date')
@@ -89,8 +110,6 @@ def index(request):
 
     if request.user.is_authenticated:
         context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
-    else:
-        context['cart_items'] = ['Log in']
 
     return render(request, 'items/offers_list.html', context)
 
