@@ -1,14 +1,17 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404
+from django.urls import reverse
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.views.generic.edit import CreateView
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 from .models import Item, SaleOffer
 from .forms import SaleOfferForm, ItemForm
 from accounts.models import Profile
+from accounts.forms import AddToCartForm
 
 # help functions
 def check_filters(filters):
@@ -94,14 +97,35 @@ def index(request):
 
 def detail(request, sale_id):
     sale = get_object_or_404(SaleOffer, pk=sale_id)
+
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            form = AddToCartForm(request.POST)
+            if form.is_valid():
+                item = form.save(commit=False)
+                item.profile = Profile.objects.get(user=request.user)
+                item.item = sale
+                item.save()
+
+                if request.POST.get("buy"):
+                    return redirect('cart')
+
+                elif request.POST.get('add'):
+                    messages.success(request, 'An item has been added to the cart.')
+                    return HttpResponseRedirect(reverse('items:detail', args=[sale.id]))
+        else:
+            messages.warning(request, 'You must be logged in to buy an item.')
+            return redirect('login')
+    else:
+        form = AddToCartForm()
+
     context = {
         'sale': sale,
+        'form': form,
     }
 
     if request.user.is_authenticated:
         context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
-    else:
-        context['cart_items'] = ['Log in']
 
     return render(request, 'items/detail.html', context)
 
@@ -122,12 +146,10 @@ def filter(request, filter):
 
     if request.user.is_authenticated:
         context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
-    else:
-        context['cart_items'] = ['Log in']
 
     return render(request, 'items/offers_list.html', context)
 
-
+@login_required
 def add_item(request):
     if request.method == 'POST':
         form = ItemForm(request.POST)
@@ -147,6 +169,7 @@ def add_item(request):
     return render(request, 'items/add_item.html', context)
 
 
+@login_required
 def create(request):
     if request.method == 'POST':
         form = SaleOfferForm(request.user, request.POST, request.FILES)
@@ -155,6 +178,7 @@ def create(request):
             return redirect('items:index')
     else:
         form = SaleOfferForm(request.user)
+
     context = {
         'form': form,
         'cart_items': Profile.objects.get(user=request.user).cart_items.all()

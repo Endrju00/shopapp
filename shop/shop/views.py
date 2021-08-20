@@ -29,7 +29,6 @@ def get_suggestions(sales, categories, suggestions):
 class HomePage(TemplateView):
     template_name = 'index.html'
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = dict(SaleOffer.CATEGORY)

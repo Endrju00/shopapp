@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
 
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-left:15%;">
@@ -29,8 +30,19 @@
     <div class="card-body">
       <h2 class="card-title">{{ sale.title }}</h2>
       <h3 class="card-title" style="float: left; margin-right: 30px; margin-top: 8px;">{{ sale.price }}zł</h3>
-      <button type="button" class="btn btn-warning btn-lg" style="float: left; margin-right: 10px;"><span class="fa fa-dollar"></span> Buy Now!</button>
-      <button type="button" class="btn btn-warning btn-lg"><span class="fa fa-shopping-cart"></span> Add to cart</button><br><br>
+
+      <form method="post" enctype='multipart/form-data' style="float: left; margin-right: 10px;">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-warning btn-lg" type="submit" name="buy" value="1"><span class="fa fa-dollar"></span> Buy Now!</button><br><br>
+      </form>
+
+      <form method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-warning btn-lg" type="submit" name="add" value="1"><span class="fa fa-shopping-cart"></span> Add to cart</button><br><br>
+      </form>
+
       <p class="card-text"><small class="text-muted">
         Dealer: <a href="{% url 'profile' sale.item.dealer.id %}" style="color: orange;"><strong>{{ sale.item.dealer }}</strong></a>
         <span class="characteristic">Posted: <strong>{{ sale.pub_date }}</strong></span>

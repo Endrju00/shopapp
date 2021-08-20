@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserRegisterForm
 from django.contrib.auth.models import User
-
+from django.contrib.auth.decorators import login_required
 
 from .models import Profile
 from items.models import SaleOffer, Item
@@ -36,21 +36,18 @@ def profile(request, user_id):
 
     if request.user.is_authenticated:
         context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
-    else:
-        context['cart_items'] = ['Log in']
 
     return render(request, 'accounts/profile.html', context)
 
 
+@login_required
 def cart(request):
     user_profile = Profile.objects.get(user=request.user)
     context = {
         'sales': user_profile.cart_items.all(),
+        'cart_items': Profile.objects.get(user=request.user).cart_items.all(),
     }
 
-    if request.user.is_authenticated:
-        context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
-    else:
-        context['cart_items'] = ['Log in']
+    context['total_sum'] = round(sum(sale.price for sale in context['cart_items']),2)
 
     return render(request, 'accounts/cart.html', context)
