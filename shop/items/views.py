@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Item, SaleOffer
 from .forms import SaleOfferForm, ItemForm
 from accounts.models import Profile
-from accounts.forms import AddToCartForm
+from accounts.forms import CartForm
 
 # help functions
 def check_filters(filters):
@@ -77,7 +77,7 @@ def index(request):
         elif request.POST.get('buy'):
             if request.user.is_authenticated:
                 sale = SaleOffer.objects.get(id=request.POST.get('buy'))
-                form = AddToCartForm(request.POST)
+                form = CartForm(request.POST)
                 if form.is_valid():
                     item = form.save(commit=False)
                     item.profile = Profile.objects.get(user=request.user)
@@ -119,7 +119,7 @@ def detail(request, sale_id):
 
     if request.method == 'POST':
         if request.user.is_authenticated:
-            form = AddToCartForm(request.POST)
+            form = CartForm(request.POST)
             if form.is_valid():
                 item = form.save(commit=False)
                 item.profile = Profile.objects.get(user=request.user)
@@ -136,7 +136,7 @@ def detail(request, sale_id):
             messages.warning(request, 'You must be logged in to buy an item.')
             return redirect('login')
     else:
-        form = AddToCartForm()
+        form = CartForm()
 
     context = {
         'sale': sale,

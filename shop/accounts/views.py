@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
-from .models import Profile
+from .models import Profile, CartMembership
+from .forms import CartForm
 from items.models import SaleOffer, Item
 
 # Create your views here.
@@ -43,6 +44,17 @@ def profile(request, user_id):
 
 @login_required
 def cart(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            form = CartForm(request.POST)
+            if form.is_valid():
+                profile = Profile.objects.get(user=request.user)
+                sale = SaleOffer.objects.get(id=request.POST.get('delete'))
+                item = CartMembership.objects.get(profile=profile, item=sale)
+                item.delete()
+    else:
+        form = CartForm()
+
     user_profile = Profile.objects.get(user=request.user)
     sales = user_profile.cart_items.all()
 
@@ -54,6 +66,7 @@ def cart(request):
         'sales': sales,
         'cart_items': Profile.objects.get(user=request.user).cart_items.all(),
         'page_obj': page_obj,
+
     }
 
     context['total_sum'] = round(sum(sale.price for sale in context['cart_items']),2)

@@ -20,9 +20,15 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
+    class Meta:
+        ordering = ['-id']
+
 class CartMembership(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     item = models.ForeignKey(SaleOffer, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.profile.user}-{self.item.item.name}'
+        
+    class Meta:
+        ordering = ['-id']

@@ -35,6 +35,9 @@ class Item(models.Model):
                 return c[1]
         return 'Not Specified'
 
+    class Meta:
+        ordering = ['-id']
+
 
 class SaleOffer(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
@@ -71,3 +74,6 @@ class SaleOffer(models.Model):
 
     def __str__(self):
         return f"{self.item.name} for {self.price} PLN"
+
+    class Meta:
+        ordering = ['-pub_date']

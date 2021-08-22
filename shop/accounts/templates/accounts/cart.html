@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div style="width:100%; min-height: 90vh;">
   <div style=" width: 70%; min-height: inherit; float: left;">
@@ -10,7 +11,16 @@
           <a class="list-group-item list-group-item-action" href="{% url 'items:detail' sale.id %}" style="height:100px; margin-bottom: 10px;">
             <img src="{{ sale.first_image.url }}" class="img-thumbnail float-left" style="width: 70px; height:70px; object-fit: cover; margin-right: 10px;">
             <h4>{{ sale.title }}</h4>
-            <legend>{{ sale.price }}zł</legend>
+            <div style="float: left; width:91%;">
+              <h4 style="display: inline-block; margin: 0;">{{ sale.price }}zł</h4>
+
+              <form method="post" enctype='multipart/form-data' style="float: right;">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class="btn btn-outline-warning btn-sm" type="submit" name="delete" value={{sale.id}}><span class="fa fa-trash-o"></span> Delete</button><br><br>
+              </form>
+            </div>
+
           </a>
         </div>
         {% endfor %}
