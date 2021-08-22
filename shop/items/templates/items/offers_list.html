@@ -18,21 +18,21 @@
 
           <h2>{{ sale.price }}zł</h2>
 
-          <form method="post" enctype='multipart/form-data' style="float: left; margin-right: 10px;">
+          <form method="post" enctype='multipart/form-data' style="margin-bottom: 0px;">
             {% csrf_token %}
             {{ form|crispy }}
-            <button class="btn btn-warning btn-lg" type="submit" name="buy" value={{sale.id}}><span class="fa fa-dollar"></span> Buy Now!</button><br><br>
+            <button class="btn btn-warning" type="submit" name="buy" value={{sale.id}}><span class="fa fa-dollar"></span> Buy Now!</button><br><br>
           </form>
 
           {% if sale.free_delivery %}
-            <p><small class="text-muted">
+            <small class="text-muted">
               Free delivery available!
-            </small></p>
-            <p style="margin-top: 28px;"><small class="text-muted">
+            </small>
+            <p><small class="text-muted">
               Available till: <strong>{{ sale.exp_date }}</strong>
             </small></p>
           {% else %}
-            <p style="margin-top: 50px;"><small class="text-muted">
+            <p style="margin-top:25px;"><small class="text-muted">
               Available till: <strong>{{ sale.exp_date }}</strong>
             </small></p>
           {% endif %}

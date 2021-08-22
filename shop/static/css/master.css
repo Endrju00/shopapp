@@ -131,6 +131,7 @@ a {
 
 #cart{
   left: -60px;
+  min-width: 20vh;
 }
 
 #user_panel {

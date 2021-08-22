@@ -1,46 +1,62 @@
 {% extends 'base.html' %}
 {% block content %}
-<div style="width:100%; height: 91vh;">
+<div style="width:100%; min-height: 90vh;">
+  <div style=" width: 70%; min-height: inherit; float: left;">
+    <div class="card" id="cart_items" style="width: 100%; min-height: inherit;">
+      <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%; width: 96%; margin-left: 2%;">Cart</legend>
+      {% if sales %}
+        {% for sale in page_obj %}
+        <div class="container">
+          <a class="list-group-item list-group-item-action" href="{% url 'items:detail' sale.id %}" style="height:100px; margin-bottom: 10px;">
+            <img src="{{ sale.first_image.url }}" class="img-thumbnail float-left" style="width: 70px; height:70px; object-fit: cover; margin-right: 10px;">
+            <h4>{{ sale.title }}</h4>
+            <legend>{{ sale.price }}zł</legend>
+          </a>
+        </div>
+        {% endfor %}
+        <br>
 
-  <div class="container card" id="cart_items" style="width: 70%; float: left;">
-    <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Cart</legend>
-    {% if sales %}
-      {% for sale in sales %}
-      <div class="container">
-        <a class="list-group-item list-group-item-action" href="{% url 'items:detail' sale.id %}" style="height:100px; margin-bottom: 10px;">
-          <img src="{{ sale.first_image.url }}" class="img-thumbnail float-left" style="width: 70px; height:70px; object-fit: cover; margin-right: 10px;">
-          <h4>{{ sale.title }}</h4>
-          <legend>{{ sale.price }}zł</legend>
-        </a>
-      </div>
-      {% endfor %}
-<br><br>
-      <div class="border-top pt-2 mb-1" style="margin-bottom: 20px; position:absolute; bottom:0;">
-        <small class="text-muted">
-          Want something else? <a class='ml-2' href="{% url 'items:index' %}">See the sale offers.</a>
-        </small>
-      </div>
+        <div class="pagination" style="width: 100%; margin-bottom: 20px; position:absolute; bottom:5vh;">
+          <span class="step-links" style="margin-left: auto; margin-right: auto;">
+              {% if page_obj.has_previous %}
+                  <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-warning btn-sm"><span class="fa fa-step-backward"></span> Previous</a>
+              {% endif %}
 
-    {% else %}
-      <h2>Your cart is empty.</h2><br>
-      <div class="border-top pt-2 mb-1" style ="margin-bottom: 20px; position:absolute; bottom:0;">
-        <small class="text-muted">
-          Nothing here? <a class='ml-2' href="{% url 'items:index' %}">See the sale offers.</a>
-        </small>
-      </div>
-    {% endif %}
+              <span class="btn btn-warning btn-sm">
+                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+              </span>
 
+              {% if page_obj.has_next %}
+                  <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-warning btn-sm"><span class="fa fa-step-forward"></span> Next</a>
+              {% endif %}
+          </span>
+        </div><br><br><br>
+
+        <div class="border-top pt-2 mb-1" style="margin-bottom: 20px; position:absolute; bottom:0;">
+          <small class="text-muted">
+            Want something else? <a class='ml-2' href="{% url 'items:index' %}">See the sale offers.</a>
+          </small>
+        </div>
+
+      {% else %}
+        <h2 style="margin-left: 2%;">Your cart is empty.</h2><br>
+        <div class="border-top pt-2 mb-1" style ="margin-bottom: 20px; position:absolute; bottom:0;">
+          <small class="text-muted">
+            Nothing here? <a class='ml-2' href="{% url 'items:index' %}">See the sale offers.</a>
+          </small>
+        </div>
+      {% endif %}
+
+    </div>
   </div>
 
-  <div class="container card" id="cart_items" style="width:29%; height: inherit;">
+  <div class="container card" id="cart_items" style="width:29%; min-height: inherit;">
     <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Summary</legend>
     <h5>Number of items: <strong>{{ sales|length }}</strong></h5>
     <h5>Total price: <strong>{{ total_sum }}zł</strong></h5><br>
-
     <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Addres</legend>
-
     <button type="button" name="button" class="btn btn-warning" style="position: absolute; bottom: 0; left:5%; margin-bottom:20px; width: 90%;">Submit your order</button>
-
   </div>
+
 </div>
 {% endblock %}
