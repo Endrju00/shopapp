@@ -29,11 +29,25 @@ def register(request):
 
 
 def profile(request, user_id):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            form = CartForm(request.POST)
+            if form.is_valid():
+                if request.POST.get("delete_item"):
+                    item = Item.objects.get(id=request.POST.get("delete_item"))
+                    item.delete()
+                elif request.POST.get("delete_sale"):
+                    sale = SaleOffer.objects.get(id=request.POST.get("delete_sale"))
+                    sale.delete()
+    else:
+        form = CartForm()
+
     context = {
         'profile': User.objects.get(id=user_id),
         'user': request.user,
         'sales': SaleOffer.objects.filter(item__dealer__id=user_id),
         'items': Item.objects.filter(dealer__id=user_id),
+        'form': form
     }
 
     if request.user.is_authenticated:

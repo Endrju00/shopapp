@@ -1,5 +1,5 @@
 {% extends 'accounts/base_profile.html' %}
-
+{% load crispy_forms_tags %}
 {% block profile %}
   <div class="container card" id="profile">
     <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Profile</legend>
@@ -16,7 +16,12 @@
       {% for item in items %}
       <div class="container">
         <li class="list-group-item">
-          <h4>{{ item.name }} {{ item.producer }}</h4><br>
+          <h4 style="float: left;">{{ item.name }} {{ item.producer }}</h4>
+          <form method="post" enctype='multipart/form-data' style="float: right;">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-outline-warning btn-sm" type="submit" name="delete_item" value={{item.id}}><span class="fa fa-trash-o"></span> Delete</button><br><br>
+          </form><br><br>
           <p><small class="text-muted">
             Condition: <strong>{{ item.get_condition }}</strong>
             <span class="characteristic">Weight: <strong>{{ item.weight }}g</strong></span>
@@ -28,7 +33,7 @@
             Color: <strong>{{ item.color }}</strong>
           </small></p>
         </li>
-      </div>
+      </div><br>
       {% endfor %}
       <br>
     {% else %}
@@ -45,6 +50,13 @@
         <a class="list-group-item list-group-item-action" href="{% url 'items:detail' sale.id %}" style="height:180px;">
           <img src="{{ sale.first_image.url }}" class="img-thumbnail float-left" style="width: 150px; height:150px; object-fit: cover; margin-right: 10px;">
           <h4>{{ sale.title }}</h4>
+
+          <form method="post" enctype='multipart/form-data' style="float: right;">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-outline-warning btn-sm" type="submit" name="delete_sale" value={{sale.id}}><span class="fa fa-trash-o"></span> Delete</button><br><br>
+          </form>
+
           <legend>{{ sale.price }}zł</legend>
           <p><small class="text-muted">
             Producer: <strong>{{ sale.item.producer }}</strong>
