@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container card" style="margin-top: 3%; width: 100%;">
+    <h1 style="margin-top:1%;">{{order}}</h1>
+    <legend class="border-bottom mb-2">Bought items</legend>
+    {% for sale in items %}
+    <div class="container">
+      <a class="list-group-item list-group-item-action" href="{% url 'items:detail' sale.id %}" style="height:180px;">
+        <img src="{{ sale.first_image.url }}" class="img-thumbnail float-left" style="width: 150px; height:150px; object-fit: cover; margin-right: 10px;">
+        <h4>{{ sale.title }}</h4>
+        <legend>{{ sale.price }}zł</legend>
+        <p><small class="text-muted">
+          Producer: <strong>{{ sale.item.producer }}</strong>
+          <span class="characteristic">Condition: <strong>{{ sale.item.get_condition }}</strong></span>
+          <span class="characteristic">Number of pieces in the package: <strong>{{ sale.quantity }}</strong></span>
+        </small></p>
+        <p><small class="text-muted">
+          Color: <strong>{{ sale.item.color }}</strong>
+        </small></p>
+      </a>
+    </div><br>
+    {% endfor %}
+    <legend class="border-bottom mb-2">Personal data</legend>
+    <p><small class="text-muted">
+      Buyer: <strong>{{ order.buyer.user }}</strong>
+      <span class="characteristic">Country: <strong>{{ order.country }}</strong></span>
+      <span class="characteristic">City: <strong>{{ order.city }}</strong></span>
+      <span class="characteristic">Street: <strong>{{ order.street }}</strong></span>
+      <span class="characteristic">Postal code: <strong>{{ order.postal_code }}</strong></span>
+    </small></p>
+
+
+    <div class="border-top pt-2 mb-1" style ="margin-bottom: 20px;">
+      <small class="text-muted">
+        Want more stuff? <a class='ml-2' href="{% url 'items:index' %}">See the sales.</a>
+      </small>
+    </div>
+  </div>
+{% endblock %}

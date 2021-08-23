@@ -49,7 +49,7 @@
     {% if orders %}
       {% for order in orders %}
       <div class="container">
-        <a class="list-group-item list-group-item-action">
+        <a class="list-group-item list-group-item-action" href="{% url 'order' order.id %}">
           <h4 style="margin-top: 10px;">{{ order }}</h4>
           <p><small class="text-muted">
             Status: <strong>{{ order.status }}</strong>

@@ -110,3 +110,15 @@ def cart(request):
     context['total_sum'] = round(sum(sale.price for sale in context['cart_items']),2)
 
     return render(request, 'accounts/cart.html', context)
+
+
+def order(request, order_id):
+    order = Order.objects.get(id=order_id)
+    items = order.items.all()
+
+    context = {
+        'order': order,
+        'items': items,
+    }
+
+    return render(request, 'accounts/order.html', context)
