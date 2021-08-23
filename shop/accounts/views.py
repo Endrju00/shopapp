@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
-from .models import Profile, CartMembership, OrderMembership
+from .models import Profile, CartMembership, OrderMembership, Order
 from .forms import CartForm, OrderForm
 from items.models import SaleOffer, Item
 
@@ -51,6 +51,7 @@ def profile(request, user_id):
     }
 
     if request.user.is_authenticated:
+        context['orders'] = Order.objects.filter(buyer=context['profile'].profile)
         context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
 
     return render(request, 'accounts/profile.html', context)
@@ -109,13 +110,3 @@ def cart(request):
     context['total_sum'] = round(sum(sale.price for sale in context['cart_items']),2)
 
     return render(request, 'accounts/cart.html', context)
-
-
-@login_required
-def shopping(request):
-    user_profile = Profile.objects.get(user=request.user)
-    orders = Order.objects.filter(buyer=user_profile)
-
-    context = {
-        'orders': orders,
-    }

@@ -18,8 +18,10 @@
           Sales</a>
         <a href="{% url 'items:add_item' %}" class="list-group-item list-group-item-action">Add an item</a>
         <a href="{% url 'items:add_sale' %}" class="list-group-item list-group-item-action">Create an Offer</a>
-        <a href="{% url 'profile' profile.id %}#mysales" class="list-group-item list-group-item-action">My shopping</a>
-        <a href="{% url 'profile' profile.id %}#mysales" class="list-group-item list-group-item-action">Go to cart</a>
+        {% if user.id == profile.id %}
+          <a href="{% url 'profile' profile.id %}#myshopping" class="list-group-item list-group-item-action">My orders</a>
+        {% endif %}
+        <a href="{% url 'cart' %}" class="list-group-item list-group-item-action">Go to cart</a>
       </ul>
     {% else %}
     <ul class="list-group">
@@ -37,7 +39,7 @@
         Sales</a>
       <a href="{% url 'login' %}" class="list-group-item list-group-item-action">Add an item</a>
       <a href="{% url 'login' %}" class="list-group-item list-group-item-action">Create an Offer</a>
-      <a href="{% url 'login' %}" class="list-group-item list-group-item-action">My bought items</a>
+      <a href="{% url 'login' %}" class="list-group-item list-group-item-action">My orders</a>
       <a href="{% url 'cart' %}" class="list-group-item list-group-item-action">Go to cart</a>
     </ul>
     {% endif %}

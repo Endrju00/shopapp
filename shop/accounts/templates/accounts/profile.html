@@ -1,5 +1,6 @@
 {% extends 'accounts/base_profile.html' %}
 {% load crispy_forms_tags %}
+{% load items_extras %}
 {% block profile %}
   <div class="container card" id="profile">
     <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Profile</legend>
@@ -42,6 +43,27 @@
   </div><br>
   {% endif %}
 
+  {% if user.id == profile.id %}
+  <div class="container card" id="myshopping">
+    <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">My orders</legend>
+    {% if orders %}
+      {% for order in orders %}
+      <div class="container">
+        <a class="list-group-item list-group-item-action">
+          <h4 style="margin-top: 10px;">{{ order }}</h4>
+          <p><small class="text-muted">
+            Status: <strong>{{ order.status }}</strong>
+          </small></p>
+        </a>
+      </div><br>
+      {% endfor %}
+      <br>
+    {% else %}
+      <legend><strong>No orders available.</strong></legend>
+    {% endif %}
+  </div><br>
+  {% endif %}
+
   <div class="container card" id="mysales">
     <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Sales</legend>
     {% if sales %}
@@ -74,5 +96,6 @@
       <legend><strong>No sales available.</strong></legend>
     {% endif %}
   </div><br>
+
 
 {% endblock %}

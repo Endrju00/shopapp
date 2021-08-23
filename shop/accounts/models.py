@@ -47,9 +47,9 @@ class Order(models.Model):
     street = models.CharField(max_length=50)
     postal_code = models.CharField(max_length=6)
 
-    IN_PROGRESS = 'P'
-    SENT = 'S'
-    DELIVERED = 'D'
+    IN_PROGRESS = 'In progress'
+    SENT = 'Sent'
+    DELIVERED = 'Delivered'
 
     STATUS = [
         (IN_PROGRESS, 'In progress'),
@@ -57,7 +57,7 @@ class Order(models.Model):
         (DELIVERED, 'Delivered'),
     ]
 
-    status = models.CharField(max_length=1, choices=STATUS, default=IN_PROGRESS)
+    status = models.CharField(max_length=20, choices=STATUS, default=IN_PROGRESS)
 
     def __str__(self):
         return f'Order #{self.id}'
