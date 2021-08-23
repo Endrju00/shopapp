@@ -16,7 +16,6 @@
 
               <form method="post" enctype='multipart/form-data' style="float: right;">
                 {% csrf_token %}
-                {{ form|crispy }}
                 <button class="btn btn-outline-warning btn-sm" type="submit" name="delete" value={{sale.id}}><span class="fa fa-trash-o"></span> Delete</button><br><br>
               </form>
             </div>
@@ -65,7 +64,11 @@
     <h5>Number of items: <strong>{{ sales|length }}</strong></h5>
     <h5>Total price: <strong>{{ total_sum }}zł</strong></h5><br>
     <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Addres</legend>
-    <button type="button" name="button" class="btn btn-warning" style="position: absolute; bottom: 0; left:5%; margin-bottom:20px; width: 90%;">Submit your order</button>
+    <form method="post" enctype='multipart/form-data' style="float: right;">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" name="submit_order" value="1" class="btn btn-warning" style="position: absolute; bottom: 0; left:5%; margin-bottom:20px; width: 90%;">Submit your order</button>
+    </form>
   </div>
 
 </div>

@@ -141,3 +141,7 @@ a {
 #cart_items{
   width: 80%;
 }
+
+#div_id_country, #div_id_city, #div_id_street, #div_id_postal_code  {
+  width: 140%;
+}

@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
-from .models import Profile, CartMembership
-from .forms import CartForm
+from .models import Profile, CartMembership, OrderMembership
+from .forms import CartForm, OrderForm
 from items.models import SaleOffer, Item
 
 # Create your views here.
@@ -60,14 +60,37 @@ def profile(request, user_id):
 def cart(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
-            form = CartForm(request.POST)
-            if form.is_valid():
+
+            # Deletion
+            if request.POST.get('delete'):
                 profile = Profile.objects.get(user=request.user)
                 sale = SaleOffer.objects.get(id=request.POST.get('delete'))
                 item = CartMembership.objects.get(profile=profile, item=sale)
                 item.delete()
+
+            # Submit order
+            if request.POST.get('submit_order'):
+                form = OrderForm(request.POST)
+
+                if form.is_valid():
+                    # Get user profile
+                    profile = Profile.objects.get(user=request.user)
+
+                    # Save order
+                    order = form.save(commit=False)
+                    order.buyer = profile
+                    order.save()
+
+                    # Save items in order
+                    for item in profile.cart_items.all():
+                        OrderMembership(order=order, item=item).save()
+
+                        # Delete items from cart
+                        cart_item = CartMembership.objects.get(profile=profile, item=item)
+                        cart_item.delete()
+
     else:
-        form = CartForm()
+        form = OrderForm()
 
     user_profile = Profile.objects.get(user=request.user)
     sales = user_profile.cart_items.all()
@@ -80,9 +103,19 @@ def cart(request):
         'sales': sales,
         'cart_items': Profile.objects.get(user=request.user).cart_items.all(),
         'page_obj': page_obj,
-
+        'form': form,
     }
 
     context['total_sum'] = round(sum(sale.price for sale in context['cart_items']),2)
 
     return render(request, 'accounts/cart.html', context)
+
+
+@login_required
+def shopping(request):
+    user_profile = Profile.objects.get(user=request.user)
+    orders = Order.objects.filter(buyer=user_profile)
+
+    context = {
+        'orders': orders,
+    }

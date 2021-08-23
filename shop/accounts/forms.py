@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import CartMembership
+from .models import CartMembership, Order, OrderMembership
 
 
 class UserRegisterForm(UserCreationForm):
@@ -17,3 +17,9 @@ class CartForm(forms.ModelForm):
     class Meta:
         model = CartMembership
         exclude = ['profile', 'item']
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        exclude = ['buyer', 'items', 'status']
