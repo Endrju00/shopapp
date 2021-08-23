@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Item, SaleOffer
 from .forms import SaleOfferForm, ItemForm
-from accounts.models import Profile
+from accounts.models import Profile, CartMembership
 from accounts.forms import CartForm
 
 # help functions
@@ -78,18 +78,21 @@ def index(request):
             if request.user.is_authenticated:
                 sale = SaleOffer.objects.get(id=request.POST.get('buy'))
                 form = CartForm(request.POST)
+
                 if form.is_valid():
                     item = form.save(commit=False)
                     item.profile = Profile.objects.get(user=request.user)
                     item.item = sale
-                    item.save()
+
+                    if not CartMembership.objects.filter(profile=item.profile, item=item.item):
+                        messages.success(request, 'An item has been added to the cart.')
+                        item.save()
+                    else:
+                        messages.warning(request, 'This item is in your cart.')
 
                     if request.POST.get("buy"):
                         return redirect('cart')
 
-                    elif request.POST.get('add'):
-                        messages.success(request, 'An item has been added to the cart.')
-                        return HttpResponseRedirect(reverse('items:detail', args=[sale.id]))
             else:
                 messages.warning(request, 'You must be logged in to buy an item.')
                 return redirect('login')
@@ -124,13 +127,17 @@ def detail(request, sale_id):
                 item = form.save(commit=False)
                 item.profile = Profile.objects.get(user=request.user)
                 item.item = sale
-                item.save()
+
+                if not CartMembership.objects.filter(profile=item.profile, item=item.item):
+                    messages.success(request, 'An item has been added to the cart.')
+                    item.save()
+                else:
+                    messages.warning(request, 'This item is in your cart.')
 
                 if request.POST.get("buy"):
                     return redirect('cart')
 
                 elif request.POST.get('add'):
-                    messages.success(request, 'An item has been added to the cart.')
                     return HttpResponseRedirect(reverse('items:detail', args=[sale.id]))
         else:
             messages.warning(request, 'You must be logged in to buy an item.')

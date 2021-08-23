@@ -64,6 +64,7 @@ def cart(request):
 
             # Deletion
             if request.POST.get('delete'):
+                form = CartForm()
                 profile = Profile.objects.get(user=request.user)
                 sale = SaleOffer.objects.get(id=request.POST.get('delete'))
                 item = CartMembership.objects.get(profile=profile, item=sale)
