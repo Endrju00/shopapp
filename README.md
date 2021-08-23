@@ -6,6 +6,7 @@ Available on https://shop-api-deploy.herokuapp.com (without images).
 * [Technologies](#technologies)
 * [Installation](#installation)
 * [Deployment](#deployment)
+* [Gifs](#gifs)
 
 ## General info
 A shop API that enables user to buy, post and create sale offers of particular items from many categories.
@@ -44,3 +45,7 @@ Project is created with:
 
 ## Deployment
 App is deployed on [Heroku](https://dashboard.heroku.com/) and available [here](https://shop-api-deploy.herokuapp.com)
+
+## Gifs
+![](media/1.gif)
+![](media/2.gif)
