@@ -3,7 +3,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class Item(models.Model):
@@ -11,10 +11,11 @@ class Item(models.Model):
     name = models.CharField(max_length=50)
     producer = models.CharField(max_length=50)
     quantity = models.PositiveIntegerField(help_text='Please pass the quantity of this item that you have to sell.', default=1)
-    weight = models.PositiveIntegerField(help_text='Please pass the weight in kilograms.')
-    height = models.PositiveIntegerField(help_text='Please pass the height in meters.')
-    length = models.PositiveIntegerField(help_text='Please pass the length in meters.')
-    width = models.PositiveIntegerField(help_text='Please pass the width in meters.')
+
+    weight = models.FloatField(help_text='Please pass the weight in kilograms.', validators=[MinValueValidator(0)])
+    height = models.FloatField(help_text='Please pass the height in meters.', validators=[MinValueValidator(0)])
+    length = models.FloatField(help_text='Please pass the length in meters.', validators=[MinValueValidator(0)])
+    width = models.FloatField(help_text='Please pass the width in meters.', validators=[MinValueValidator(0)])
     color = models.CharField(max_length=50, default="Unknown")
 
     NEW = 'N'
