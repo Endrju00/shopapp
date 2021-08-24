@@ -34,10 +34,12 @@ def profile(request, user_id):
             form = CartForm(request.POST)
             if form.is_valid():
                 if request.POST.get("delete_item"):
-                    item = Item.objects.get(id=request.POST.get("delete_item"))
+                    item_id = request.POST.get("delete_item")
+                    item = Item.objects.get(id=item_id)
                     item.delete()
                 elif request.POST.get("delete_sale"):
-                    sale = SaleOffer.objects.get(id=request.POST.get("delete_sale"))
+                    sale_id = request.POST.get("delete_sale")
+                    sale = SaleOffer.objects.get(id=sale_id)
                     sale.delete()
     else:
         form = CartForm()
@@ -61,14 +63,14 @@ def profile(request, user_id):
 def cart(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
-
-            # Deletion
-            if request.POST.get('delete'):
-                form = CartForm()
+            # Delete item from the cart
+            if request.POST.get('delete_cart_item'):
+                sale_id = request.POST.get('delete_cart_item')
+                form = OrderForm()
                 profile = Profile.objects.get(user=request.user)
-                sale = SaleOffer.objects.get(id=request.POST.get('delete'))
-                item = CartMembership.objects.get(profile=profile, item=sale)
-                item.delete()
+                sale = SaleOffer.objects.get(id=sale_id)
+                cartmember = CartMembership.objects.get(profile=profile, cart_item=sale)
+                cartmember.delete()
 
             # Submit order
             if request.POST.get('submit_order'):
@@ -83,20 +85,27 @@ def cart(request):
                     order.buyer = profile
                     order.save()
 
-                    # Save items in order
-                    for item in profile.cart_items.all():
-                        OrderMembership(order=order, item=item).save()
+                    # check if there are items in the cart
+                    if profile.cart_items.all():
+                        # Save items in order
+                        for item in profile.cart_items.all():
+                            OrderMembership(order=order, order_item=item).save()
 
-                        # Delete items from cart
-                        cart_item = CartMembership.objects.get(profile=profile, item=item)
-                        cart_item.delete()
+                            # Delete items from cart
+                            cartmember = CartMembership.objects.get(profile=profile, cart_item=item)
+                            cartmember.delete()
+                    else:
+                        redirect('cart')
+                        messages.warning(request, 'You can not order nothing!')
 
     else:
         form = OrderForm()
 
+    # Get data
     user_profile = Profile.objects.get(user=request.user)
     sales = user_profile.cart_items.all()
 
+    # Paginate sales in basket
     paginator = Paginator(sales, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -114,8 +123,9 @@ def cart(request):
 
 
 def order(request, order_id):
+    # Get data
     order = Order.objects.get(id=order_id)
-    items = order.items.all()
+    items = order.order_items.all()
 
     context = {
         'order': order,

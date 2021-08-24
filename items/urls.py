@@ -10,7 +10,7 @@ urlpatterns = [
     path('detail/<int:sale_id>/', views.detail, name='detail'),
     path('filtered/<str:filter>/', views.filter, name='filter'),
     path('item/', views.add_item, name='add_item'),
-    path('create/', views.create, name='add_sale'),
+    path('create/', views.create_sale, name='add_sale'),
 ]
 
 if settings.DEBUG:

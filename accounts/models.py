@@ -26,7 +26,7 @@ class Profile(models.Model):
 
 class CartMembership(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    item = models.ForeignKey(SaleOffer, on_delete=models.CASCADE)
+    cart_item = models.ForeignKey(SaleOffer, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.profile.user}-{self.item.item.name}'
@@ -37,7 +37,7 @@ class CartMembership(models.Model):
 
 class Order(models.Model):
     buyer = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    items = models.ManyToManyField(
+    order_items = models.ManyToManyField(
         SaleOffer,
         through='OrderMembership',
     )
@@ -68,7 +68,7 @@ class Order(models.Model):
 
 class OrderMembership(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    item = models.ForeignKey(SaleOffer, on_delete=models.CASCADE)
+    order_item = models.ForeignKey(SaleOffer, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.item} in #{self.order.id}'

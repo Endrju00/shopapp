@@ -16,7 +16,7 @@
 
               <form method="post" enctype='multipart/form-data' style="float: right;">
                 {% csrf_token %}
-                <button class="btn btn-outline-warning btn-sm" type="submit" name="delete" value={{sale.id}}><span class="fa fa-trash-o"></span> Delete</button><br><br>
+                <button class="btn btn-outline-warning btn-sm" type="submit" name="delete_cart_item" value={{sale.id}}><span class="fa fa-trash-o"></span> Delete</button><br><br>
               </form>
             </div>
 

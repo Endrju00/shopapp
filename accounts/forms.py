@@ -16,10 +16,10 @@ class UserRegisterForm(UserCreationForm):
 class CartForm(forms.ModelForm):
     class Meta:
         model = CartMembership
-        exclude = ['profile', 'item']
+        exclude = ['profile', 'cart_item']
 
 
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        exclude = ['buyer', 'items', 'status']
+        exclude = ['buyer', 'order_items', 'status']

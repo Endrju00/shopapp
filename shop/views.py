@@ -20,6 +20,7 @@ def get_random_sales(sales):
 
     return random_sales
 
+
 def get_suggestions(sales, categories, suggestions):
     for category in categories.keys():
         suggestions[category] = get_random_sales(sales.filter(category=category))
@@ -37,8 +38,6 @@ class HomePage(TemplateView):
 
         if self.request.user.is_authenticated:
             context['cart_items'] = Profile.objects.get(user=self.request.user).cart_items.all()
-        else:
-            context['cart_items'] = ['Log in']
 
         get_suggestions(SaleOffer.objects.all(), context['categories'], context['suggestions'])
         return context

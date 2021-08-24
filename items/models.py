@@ -7,13 +7,14 @@ from django.contrib.auth import get_user_model
 
 # Create your models here.
 class Item(models.Model):
-    dealer = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    dealer = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     producer = models.CharField(max_length=50)
-    weight = models.PositiveIntegerField(help_text='Please pass the weight in grams.')
-    height = models.PositiveIntegerField(help_text='Please pass the height in centimeters.')
-    length = models.PositiveIntegerField(help_text='Please pass the length in centimeters.')
-    width = models.PositiveIntegerField(help_text='Please pass the width in centimeters.')
+    quantity = models.PositiveIntegerField(help_text='Please pass the quantity of this item that you have to sell.', default=1)
+    weight = models.PositiveIntegerField(help_text='Please pass the weight in kilograms.')
+    height = models.PositiveIntegerField(help_text='Please pass the height in meters.')
+    length = models.PositiveIntegerField(help_text='Please pass the length in meters.')
+    width = models.PositiveIntegerField(help_text='Please pass the width in meters.')
     color = models.CharField(max_length=50, default="Unknown")
 
     NEW = 'N'
@@ -72,8 +73,10 @@ class SaleOffer(models.Model):
 
     category = models.CharField(max_length=2, choices=CATEGORY, default=OTHER)
 
+
     def __str__(self):
         return f"{self.item.name} for {self.price} PLN"
+
 
     class Meta:
         ordering = ['-pub_date']

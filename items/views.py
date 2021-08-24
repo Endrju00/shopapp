@@ -58,11 +58,16 @@ def check_filters(filters):
     sales = SaleOffer.objects.filter(query)
     return sales
 
+
+def in_cart(sale, profile):
+    return CartMembership.objects.filter(profile=profile, cart_item=sale)
+
 # Create your views here.
 def index(request):
     if request.method == 'POST':
         if request.POST.get('submit_filters'):
             filters = {}
+            # Get the filters
             try:
                 filters['search-bar'] = request.POST.getlist('search-bar')
                 filters['category'] = request.POST.getlist('category')
@@ -74,19 +79,22 @@ def index(request):
             except:
                 sales = SaleOffer.objects.order_by('-pub_date')
 
+        # Clicked the buy now button
         elif request.POST.get('buy'):
+            sale_id = request.POST.get('buy')
             if request.user.is_authenticated:
-                sale = SaleOffer.objects.get(id=request.POST.get('buy'))
+                sale = SaleOffer.objects.get(id=sale_id)
                 form = CartForm(request.POST)
 
                 if form.is_valid():
-                    item = form.save(commit=False)
-                    item.profile = Profile.objects.get(user=request.user)
-                    item.item = sale
+                    # Edit CartMembershipForm data
+                    cartmember = form.save(commit=False)
+                    cartmember.profile = Profile.objects.get(user=request.user)
+                    cartmember.cart_item = sale
 
-                    if not CartMembership.objects.filter(profile=item.profile, item=item.item):
+                    if not in_cart(sale, cartmember.profile):
                         messages.success(request, 'An item has been added to the cart.')
-                        item.save()
+                        cartmember.save()
                     else:
                         messages.warning(request, 'This item is in your cart.')
 
@@ -100,6 +108,7 @@ def index(request):
     elif request.method == 'GET':
         sales = SaleOffer.objects.order_by('-pub_date')
 
+    # Paginate sales
     paginator = Paginator(sales, 60)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -118,19 +127,22 @@ def index(request):
 
 
 def detail(request, sale_id):
+    # Get data
     sale = get_object_or_404(SaleOffer, pk=sale_id)
+    profile = Profile.objects.get(user=request.user)
 
     if request.method == 'POST':
         if request.user.is_authenticated:
             form = CartForm(request.POST)
             if form.is_valid():
-                item = form.save(commit=False)
-                item.profile = Profile.objects.get(user=request.user)
-                item.item = sale
+                # Edit CartMembershipForm data
+                cartmember = form.save(commit=False)
+                cartmember.profile = profile
+                cartmember.cart_item = sale
 
-                if not CartMembership.objects.filter(profile=item.profile, item=item.item):
+                if not in_cart(sale, profile):
+                    cartmember.save()
                     messages.success(request, 'An item has been added to the cart.')
-                    item.save()
                 else:
                     messages.warning(request, 'This item is in your cart.')
 
@@ -157,9 +169,11 @@ def detail(request, sale_id):
 
 
 def filter(request, filter):
+    # Get sales that belong to special category
     filtered_sales = SaleOffer.objects.filter(category=filter)
 
-    paginator = Paginator(filtered_sales, 6)
+    # Paginate sales
+    paginator = Paginator(filtered_sales, 60)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -180,6 +194,7 @@ def add_item(request):
     if request.method == 'POST':
         form = ItemForm(request.POST)
         if form.is_valid():
+            # Set the current user as dealer
             item = form.save(commit=False)
             item.dealer = request.user
             item.save()
@@ -196,7 +211,7 @@ def add_item(request):
 
 
 @login_required
-def create(request):
+def create_sale(request):
     if request.method == 'POST':
         form = SaleOfferForm(request.user, request.POST, request.FILES)
         if form.is_valid():
