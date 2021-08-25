@@ -106,22 +106,22 @@ def index(request):
     elif request.method == 'GET':
         sales = SaleOffer.objects.order_by('-pub_date')
 
-        # Paginate sales
-        paginator = Paginator(sales, 60)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
+    # Paginate sales
+    paginator = Paginator(sales, 60)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-        context = {
-            'sales': sales,
-            'categories': SaleOffer.CATEGORY,
-            'conditions': Item.CONDITION,
-            'page_obj': page_obj,
-        }
+    context = {
+        'sales': sales,
+        'categories': SaleOffer.CATEGORY,
+        'conditions': Item.CONDITION,
+        'page_obj': page_obj,
+    }
 
-        if request.user.is_authenticated:
-            context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
+    if request.user.is_authenticated:
+        context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
 
-        return render(request, 'items/offers_list.html', context)
+    return render(request, 'items/offers_list.html', context)
 
 
 def detail(request, sale_id):
