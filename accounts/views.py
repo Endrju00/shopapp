@@ -75,18 +75,23 @@ def cart(request):
                 if form.is_valid():
                     # Get user profile
                     profile = Profile.objects.get(user=request.user)
+                    cartmembers = CartMembership.objects.filter(profile=profile)
+
                     # check if there are items in the cart
-                    if profile.cart_items.all():
+                    if cartmembers:
                         # Save order
                         order = form.save(commit=False)
                         order.buyer = profile
                         order.save()
                         # Save items in order
-                        for item in profile.cart_items.all():
-                            OrderMembership(order=order, order_item=item).save()
+                        for member in cartmembers:
+                            if member.quantity > member.cart_item.item.quantity:
+                                order.delete()
+                                messages.warning(request, f'There are only {member.cart_item.item.quantity} piece(s) of {member.cart_item.title} available and you have ordered {member.quantity}.')
+                            else:
+                                OrderMembership(order=order, order_item=member.cart_item, quantity=member.quantity).save()
                             # Delete items from cart
-                            cartmember = CartMembership.objects.get(profile=profile, cart_item=item)
-                            cartmember.delete()
+                            member.delete()
                     else:
                         redirect('cart')
                         messages.warning(request, 'You can not order nothing!')
