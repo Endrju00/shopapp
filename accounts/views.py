@@ -64,11 +64,8 @@ def cart(request):
         if request.user.is_authenticated:
             # Delete item from the cart
             if request.POST.get('delete_cart_item'):
-                sale_id = request.POST.get('delete_cart_item')
-                form = OrderForm()
-                profile = Profile.objects.get(user=request.user)
-                sale = SaleOffer.objects.get(id=sale_id)
-                cartmember = CartMembership.objects.get(profile=profile, cart_item=sale)
+                cm_id = request.POST.get('delete_cart_item')
+                cartmember = CartMembership.objects.get(id=cm_id)
                 cartmember.delete()
 
             # Submit order
@@ -78,7 +75,6 @@ def cart(request):
                 if form.is_valid():
                     # Get user profile
                     profile = Profile.objects.get(user=request.user)
-
                     # check if there are items in the cart
                     if profile.cart_items.all():
                         # Save order
@@ -95,26 +91,21 @@ def cart(request):
                         redirect('cart')
                         messages.warning(request, 'You can not order nothing!')
 
-    else:
-        form = OrderForm()
-
     # Get data
     user_profile = Profile.objects.get(user=request.user)
-    sales = user_profile.cart_items.all()
+    cartmembers = CartMembership.objects.filter(profile=user_profile)
 
     # Paginate sales in basket
-    paginator = Paginator(sales, 6)
+    paginator = Paginator(cartmembers, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
-        'sales': sales,
-        'cart_items': Profile.objects.get(user=request.user).cart_items.all(),
+        'total_sum': round(sum(cartmember.cart_item.price * cartmember.quantity for cartmember in cartmembers), 2),
+        'num_of_items': sum(item.quantity for item in cartmembers),
         'page_obj': page_obj,
-        'form': form,
+        'form': OrderForm(),
     }
-
-    context['total_sum'] = round(sum(sale.price for sale in context['cart_items']),2)
 
     return render(request, 'accounts/cart.html', context)
 
