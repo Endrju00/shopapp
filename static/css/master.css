@@ -145,3 +145,7 @@ a {
 #div_id_country, #div_id_city, #div_id_street, #div_id_postal_code  {
   width: 140%;
 }
+
+#div_id_quantity {
+  margin-top:5px;
+}

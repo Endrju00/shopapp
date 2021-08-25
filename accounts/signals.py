@@ -21,6 +21,6 @@ def save_profile(sender, instance, **kwargs):
 def reduce_quantity(sender, instance, created, **kwargs):
     if created:
         item = instance.order_item.item
-        if item.quantity >= 1:
-            item.quantity -= 1
+        if item.quantity >= instance.quantity:
+            item.quantity -= instance.quantity
             item.save()

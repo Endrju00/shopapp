@@ -84,22 +84,20 @@ def index(request):
             sale_id = request.POST.get('buy')
             if request.user.is_authenticated:
                 sale = SaleOffer.objects.get(id=sale_id)
-                form = CartForm(request.POST)
+                profile = Profile.objects.get(user=request.user)
+                cartmember = CartMembership(profile=profile, cart_item=sale, quantity=1)
 
-                if form.is_valid():
-                    # Edit CartMembershipForm data
-                    cartmember = form.save(commit=False)
-                    cartmember.profile = Profile.objects.get(user=request.user)
-                    cartmember.cart_item = sale
+                if not in_cart(sale, profile):
+                    messages.success(request, 'An item has been added to the cart.')
+                    cartmember.save()
+                else:
+                    cartmember = CartMembership.objects.get(profile=profile, cart_item=sale)
+                    cartmember.quantity += 1
+                    cartmember.save()
+                    messages.success(request, f'Another {sale.title} has been added.')
 
-                    if not in_cart(sale, cartmember.profile):
-                        messages.success(request, 'An item has been added to the cart.')
-                        cartmember.save()
-                    else:
-                        messages.warning(request, 'This item is in your cart.')
 
-                    if request.POST.get("buy"):
-                        return redirect('cart')
+                return redirect('cart')
 
             else:
                 messages.warning(request, 'You must be logged in to buy an item.')
@@ -108,22 +106,22 @@ def index(request):
     elif request.method == 'GET':
         sales = SaleOffer.objects.order_by('-pub_date')
 
-    # Paginate sales
-    paginator = Paginator(sales, 60)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+        # Paginate sales
+        paginator = Paginator(sales, 60)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
 
-    context = {
-        'sales': sales,
-        'categories': SaleOffer.CATEGORY,
-        'conditions': Item.CONDITION,
-        'page_obj': page_obj,
-    }
+        context = {
+            'sales': sales,
+            'categories': SaleOffer.CATEGORY,
+            'conditions': Item.CONDITION,
+            'page_obj': page_obj,
+        }
 
-    if request.user.is_authenticated:
-        context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
+        if request.user.is_authenticated:
+            context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
 
-    return render(request, 'items/offers_list.html', context)
+        return render(request, 'items/offers_list.html', context)
 
 
 def detail(request, sale_id):
@@ -141,10 +139,13 @@ def detail(request, sale_id):
                 cartmember.cart_item = sale
 
                 if not in_cart(sale, profile):
-                    cartmember.save()
                     messages.success(request, 'An item has been added to the cart.')
+                    cartmember.save()
                 else:
-                    messages.warning(request, 'This item is in your cart.')
+                    cartmember = CartMembership.objects.get(profile=profile, cart_item=sale)
+                    cartmember.quantity += 1
+                    cartmember.save()
+                    messages.success(request, f'Another {sale.title} has been added.')
 
                 if request.POST.get("buy"):
                     return redirect('cart')

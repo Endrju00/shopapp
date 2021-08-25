@@ -27,9 +27,10 @@ class Profile(models.Model):
 class CartMembership(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     cart_item = models.ForeignKey(SaleOffer, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return f'{self.profile.user}-{self.item.item.name}'
+        return f'{self.profile.user}-{self.cart_item.item.name}'
 
     class Meta:
         ordering = ['-id']
@@ -69,9 +70,10 @@ class Order(models.Model):
 class OrderMembership(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     order_item = models.ForeignKey(SaleOffer, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return f'{self.item} in #{self.order.id}'
+        return f'{self.order_item} in #{self.order.id}'
 
     class Meta:
         ordering = ['-id']
