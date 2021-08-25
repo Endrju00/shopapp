@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserRegisterForm
@@ -45,7 +45,7 @@ def profile(request, user_id):
                 sale.delete()
 
     context = {
-        'profile': User.objects.get(id=user_id),
+        'profile': get_object_or_404(Profile, pk=user_id),
         'user': request.user,
         'sales': SaleOffer.objects.filter(item__dealer__id=user_id),
         'items': Item.objects.filter(dealer__id=user_id),
@@ -119,7 +119,7 @@ def cart(request):
 
 def order(request, order_id):
     # Get data
-    order = Order.objects.get(id=order_id)
+    order = get_object_or_404(Order, pk=order_id)
     ordermembers = OrderMembership.objects.filter(order=order)
 
     context = {
