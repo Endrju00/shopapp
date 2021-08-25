@@ -1,26 +1,31 @@
 {% extends 'base.html' %}
-
+{% load accounts_extras %}
 {% block content %}
   <div class="container card" style="margin-top: 3%; width: 100%;">
     <h1 style="margin-top:1%;">{{order}}</h1>
     <legend class="border-bottom mb-2">Bought items</legend>
-    {% for sale in items %}
-    <div class="container">
-      <a class="list-group-item list-group-item-action" href="{% url 'items:detail' sale.id %}" style="height:180px;">
-        <img src="{{ sale.first_image.url }}" class="img-thumbnail float-left" style="width: 150px; height:150px; object-fit: cover; margin-right: 10px;">
-        <h4>{{ sale.title }}</h4>
-        <legend>{{ sale.price }}zł</legend>
-        <p><small class="text-muted">
-          Producer: <strong>{{ sale.item.producer }}</strong>
-          <span class="characteristic">Condition: <strong>{{ sale.item.get_condition }}</strong></span>
-          <span class="characteristic">Number of pieces in the package: <strong>{{ sale.quantity }}</strong></span>
-        </small></p>
-        <p><small class="text-muted">
-          Color: <strong>{{ sale.item.color }}</strong>
-        </small></p>
-      </a>
-    </div><br>
-    {% endfor %}
+    {% if ordermembers %}
+      {% for om in ordermembers %}
+      <div class="container">
+        <a class="list-group-item list-group-item-action" href="{% url 'items:detail' om.order_item.id %}" style="height:180px;">
+          <img src="{{ om.order_item.first_image.url }}" class="img-thumbnail float-left" style="width: 150px; height:150px; object-fit: cover; margin-right: 10px;">
+          <h4>{{ om.order_item.title }}</h4>
+          <span style="font-size: 1.3rem; float: left; margin-right: 10px;">{{ om.order_item.price|multiple:om.quantity }}zł</span>
+          <span class="badge badge-warning" style="float: left; margin-top: 6px;">{{om.quantity}}</span><br><br>
+          <p><small class="text-muted">
+            Producer: <strong>{{ om.order_item.item.producer }}</strong>
+            <span class="characteristic">Condition: <strong>{{ om.order_item.item.get_condition }}</strong></span>
+            <span class="characteristic">Number of pieces in the package: <strong>{{ om.order_item.quantity }}</strong></span>
+          </small></p>
+          <p><small class="text-muted">
+            Color: <strong>{{ om.order_item.item.color }}</strong>
+          </small></p>
+        </a>
+      </div><br>
+      {% endfor %}
+    {% else %}
+      <h4>Sorry, someone deleted this offer.</h4>
+    {% endif %}
     <legend class="border-bottom mb-2">Personal data</legend>
     <p><small class="text-muted">
       Buyer: <strong>{{ order.buyer.user }}</strong>

@@ -87,7 +87,9 @@ def cart(request):
                         for member in cartmembers:
                             if member.quantity > member.cart_item.item.quantity:
                                 order.delete()
-                                messages.warning(request, f'There are only {member.cart_item.item.quantity} piece(s) of {member.cart_item.title} available and you have ordered {member.quantity}.')
+                                messages.warning(request,
+                                 f'There are only {member.cart_item.item.quantity} piece(s) of {member.cart_item.title} available and you have ordered {member.quantity}.')
+                                messages.warning(request, 'Please complete the order once again.')
                             else:
                                 OrderMembership(order=order, order_item=member.cart_item, quantity=member.quantity).save()
                             # Delete items from cart
@@ -118,11 +120,11 @@ def cart(request):
 def order(request, order_id):
     # Get data
     order = Order.objects.get(id=order_id)
-    items = order.order_items.all()
+    ordermembers = OrderMembership.objects.filter(order=order)
 
     context = {
         'order': order,
-        'items': items,
+        'ordermembers': ordermembers,
     }
 
     return render(request, 'accounts/order.html', context)
