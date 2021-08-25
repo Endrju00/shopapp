@@ -80,17 +80,15 @@ def cart(request):
                     # Get user profile
                     profile = Profile.objects.get(user=request.user)
 
-                    # Save order
-                    order = form.save(commit=False)
-                    order.buyer = profile
-                    order.save()
-
                     # check if there are items in the cart
                     if profile.cart_items.all():
+                        # Save order
+                        order = form.save(commit=False)
+                        order.buyer = profile
+                        order.save()
                         # Save items in order
                         for item in profile.cart_items.all():
                             OrderMembership(order=order, order_item=item).save()
-
                             # Delete items from cart
                             cartmember = CartMembership.objects.get(profile=profile, cart_item=item)
                             cartmember.delete()
