@@ -50,7 +50,7 @@
             {% if user.is_authenticated %}
             <li class="nav-item dropdown">
               <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="fa fa-shopping-cart" style="margin-right: 10px; font-size: 1.3rem;">
+                <span class="fa fa-shopping-cart" style="margin-right: 10px; font-size: 1.3rem;"></span>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="cart">
                 {% for item in cart_items %}
@@ -61,7 +61,7 @@
             </li>
               <li class="nav-item dropdown" >
                 <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="fa fa-user" style="margin-right: 10px; font-size: 1.3rem;">
+                  <span class="fa fa-user" style="margin-right: 10px; font-size: 1.3rem;"></span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="user_panel">
                   <a class="dropdown-item" href="{% url 'profile' user.id %}">Profile</a>
@@ -72,14 +72,23 @@
                   <a class="dropdown-item" href="{% url 'profile' user.id %}#myshopping">My orders</a>
                 </div>
               </li>
+              <li class="nav-item dropdown" >
+                <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="fa fa-bell" style="margin-right: 10px; font-size: 1.2rem;"></span>
+                  <span class="badge badge-warning" style="position: absolute; left: 20px; font-size: 0.5rem;">1</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="notifications">
+                  <a class="dropdown-item" href="#">Notifications</a>
+                </div>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}"><span class="fa fa-sign-out" style="margin-right: 10px; font-size: 1.3rem;"></a>
               </li>
             {% else %}
-              <li class="nav-item" style="margin-left: 50px;">
+              <li class="nav-item" style="width: 65px;">
                 <a class="nav-link" href="{% url 'login' %}">Log In</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" style="width: 80px;">
                 <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
               </li>
             {% endif %}
