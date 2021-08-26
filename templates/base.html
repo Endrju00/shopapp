@@ -54,7 +54,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="cart">
                 {% for item in cart_items %}
-                  <a class="dropdown-item" href="{% url 'items:detail' item.id %}">{{ item.item.name }} {{ item.item.producer }}</a>
+                  <a class="dropdown-item" href="{% url 'items:detail' item.id %}">{{ item.item.name|capfirst }} {{ item.item.producer }}</a>
                 {% endfor %}
                 <a class="btn btn-warning" href="{% url 'cart' %}" style="width: 90%; margin-top:5%;">Go to cart</a>
               </div>
@@ -75,11 +75,11 @@
               <li class="nav-item dropdown" >
                 <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="fa fa-bell" style="margin-right: 10px; font-size: 1.2rem;"></span>
-                  <span class="badge badge-warning" style="position: absolute; left: 20px; font-size: 0.5rem;">1</span>
+                  <span class="badge badge-warning" style="position: absolute; left: 20px; font-size: 0.5rem;">{{ notifications|length }}</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="notifications">
                   {% for notification in notifications %}
-                    <a class="dropdown-item" href="{% url 'notification' notification.id %}">{{notification.title}}</a>
+                    <a class="dropdown-item" href="{% url 'notification' notification.id %}">{{notification.title|capfirst}}</a>
                   {% endfor %}
                 </div>
               </li>

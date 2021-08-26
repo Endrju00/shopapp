@@ -35,6 +35,9 @@ class CartMembership(models.Model):
     class Meta:
         ordering = ['-id']
 
+    def get_sale(self):
+        return f'{self.cart_item.item} in {self.cart_item} offer.' + '\n' + f'Quantity: {self.quantity}'
+
 
 class Order(models.Model):
     buyer = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -67,12 +70,7 @@ class Order(models.Model):
         ordering = ['-id']
 
     def get_address(self):
-        return {
-            'country': self.country,
-            'city': self.city,
-            'street': self.street,
-            'postal_code': self.postal_code,
-        }
+        return f'Country: {self.country}' + '\n' + f'City: {self.city}' + '\n' + f'Street: {self.street}' + '\n' + f'Postal code: {self.postal_code}' + '\n'
 
 
 class OrderMembership(models.Model):
@@ -90,7 +88,8 @@ class OrderMembership(models.Model):
 class Notification(models.Model):
     receiver = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField(default='Title', max_length=50)
-    text = models.CharField(max_length=255)
+    sale_info = models.TextField(max_length=255, blank=True)
+    shipping_info = models.TextField(max_length=255, blank=True)
 
     def __str__(self):
         return f'Notification #{self.id}'

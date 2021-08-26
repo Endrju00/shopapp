@@ -93,6 +93,15 @@ def cart(request):
                                 messages.warning(request, 'Please complete the order once again.')
                             else:
                                 OrderMembership(order=order, order_item=member.cart_item, quantity=member.quantity).save()
+
+                                # Notify the dealer
+                                Notification(
+                                    receiver=member.cart_item.item.dealer.profile,
+                                    title=f'{order.buyer.user} bought your item.',
+                                    sale_info=member.get_sale(),
+                                    shipping_info=order.get_address(),
+                                ).save()
+
                             # Delete items from cart
                             member.delete()
                     else:

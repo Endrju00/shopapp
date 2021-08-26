@@ -2,8 +2,11 @@
 
 {% block content %}
   <div class="container card" style="margin-top: 3%; width: 100%;">
-    <h1 style="margin-top:1%;">{{notification.title}}</h1>
-    <h5>{{ notification.text }}</h5>
+    <h1 style="margin-top:1%;">{{notification.title|capfirst}}</h1><br>
+    <legend class="border-bottom mb-2">Sale information</legend>
+    <h5>{{ notification.sale_info|linebreaks }}</h5><br>
+    <legend class="border-bottom mb-2">Shipping information</legend>
+    <h5>{{ notification.shipping_info|linebreaks }}</h5>
 
     <div class="border-top pt-2 mb-1" style ="margin-bottom: 20px;">
       <small class="text-muted">
