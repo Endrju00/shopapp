@@ -116,11 +116,11 @@ def index(request):
         'categories': SaleOffer.CATEGORY,
         'conditions': Item.CONDITION,
         'page_obj': page_obj,
-        'notifications': Notification.objects.filter(receiver=request.user.profile),
     }
 
     if request.user.is_authenticated:
         context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
+        context['notifications'] = Notification.objects.filter(receiver=request.user.profile)
 
     return render(request, 'items/offers_list.html', context)
 
@@ -128,11 +128,11 @@ def index(request):
 def detail(request, sale_id):
     # Get data
     sale = get_object_or_404(SaleOffer, pk=sale_id)
-    profile = Profile.objects.get(user=request.user)
-
+    
     if request.method == 'POST':
         if request.user.is_authenticated:
             form = CartForm(request.POST)
+            profile = Profile.objects.get(user=request.user)
             if form.is_valid():
                 # Edit CartMembershipForm data
                 cartmember = form.save(commit=False)
@@ -162,11 +162,11 @@ def detail(request, sale_id):
     context = {
         'sale': sale,
         'form': form,
-        'notifications': Notification.objects.filter(receiver=request.user.profile),
     }
 
     if request.user.is_authenticated:
         context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
+        context['notifications'] = Notification.objects.filter(receiver=request.user.profile)
 
     return render(request, 'items/detail.html', context)
 
