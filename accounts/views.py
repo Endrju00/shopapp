@@ -45,7 +45,7 @@ def profile(request, user_id):
                 sale.delete()
 
     context = {
-        'profile': get_object_or_404(Profile, pk=user_id),
+        'profile': get_object_or_404(User, pk=user_id), # user obj (look at 'profile.html' to see the difference)
         'user': request.user,
         'sales': SaleOffer.objects.filter(item__dealer__id=user_id),
         'items': Item.objects.filter(dealer__id=user_id),
