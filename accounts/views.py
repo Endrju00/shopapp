@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .forms import UserRegisterForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
 from .models import Profile, CartMembership, OrderMembership, Order
-from .forms import CartForm, OrderForm
+from .forms import CartForm, OrderForm, UserRegisterForm
 from items.models import SaleOffer, Item
 
 # Create your views here.
@@ -117,9 +117,14 @@ def cart(request):
     return render(request, 'accounts/cart.html', context)
 
 
+@login_required
 def order(request, order_id):
     # Get data
     order = get_object_or_404(Order, pk=order_id)
+
+    if request.user is not order.buyer.user:
+        raise Http404
+
     ordermembers = OrderMembership.objects.filter(order=order)
 
     context = {
