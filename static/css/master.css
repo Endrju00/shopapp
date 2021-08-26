@@ -130,8 +130,8 @@ a {
 }
 
 #cart{
-  left: -60px;
-  min-width: 20vh;
+  width: auto;
+  left: -65px;
 }
 
 #user_panel {
