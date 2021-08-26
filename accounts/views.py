@@ -124,7 +124,7 @@ def order(request, order_id):
     # Get data
     order = get_object_or_404(Order, pk=order_id)
 
-    if request.user is not order.buyer.user:
+    if request.user.id != order.buyer.user.id:
         raise Http404
 
     ordermembers = OrderMembership.objects.filter(order=order)
@@ -136,3 +136,17 @@ def order(request, order_id):
     }
 
     return render(request, 'accounts/order.html', context)
+
+
+def notification(request, notification_id):
+    notification = get_object_or_404(Notification, pk=notification_id)
+
+    if request.user.id != notification.receiver.user.id:
+        raise Http404
+
+    context = {
+        'notification': notification,
+        'notifications': Notification.objects.filter(receiver=request.user.profile),
+    }
+
+    return render(request,'accounts/notification.html', context)

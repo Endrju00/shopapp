@@ -31,6 +31,7 @@ urlpatterns = [
     path('profile/<int:user_id>/', accounts_views.profile, name='profile'),
     path('cart/', accounts_views.cart, name='cart'),
     path('order/<int:order_id>', accounts_views.order, name='order'),
+    path('notification/<int:notification_id>/', accounts_views.notification, name='notification'),
     path('sales/', include('items.urls')),
     path('admin/', admin.site.urls),
 ]

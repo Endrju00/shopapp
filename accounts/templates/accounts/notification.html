@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container card" style="margin-top: 3%; width: 100%;">
+    <h1 style="margin-top:1%;">{{notification.title}}</h1>
+    <h5>{{ notification.text }}</h5>
+
+    <div class="border-top pt-2 mb-1" style ="margin-bottom: 20px;">
+      <small class="text-muted">
+        Want to see your profile? <a class='ml-2' href="{% url 'profile' user.id %}">Click here.</a>
+      </small>
+    </div>
+  </div>
+{% endblock %}

@@ -79,7 +79,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="notifications">
                   {% for notification in notifications %}
-                    <a class="dropdown-item" href="#">{{notification.title}}</a>
+                    <a class="dropdown-item" href="{% url 'notification' notification.id %}">{{notification.title}}</a>
                   {% endfor %}
                 </div>
               </li>
