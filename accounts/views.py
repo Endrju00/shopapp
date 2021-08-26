@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
-from .models import Profile, CartMembership, OrderMembership, Order
+from .models import Profile, CartMembership, OrderMembership, Order, Notification
 from .forms import CartForm, OrderForm, UserRegisterForm
 from items.models import SaleOffer, Item
 
@@ -49,6 +49,7 @@ def profile(request, user_id):
         'user': request.user,
         'sales': SaleOffer.objects.filter(item__dealer__id=user_id),
         'items': Item.objects.filter(dealer__id=user_id),
+        'notifications': Notification.objects.filter(receiver=request.user.profile),
     }
 
     if request.user.is_authenticated:
@@ -112,6 +113,7 @@ def cart(request):
         'num_of_items': sum(item.quantity for item in cartmembers),
         'page_obj': page_obj,
         'form': OrderForm(),
+        'notifications': Notification.objects.filter(receiver=request.user.profile),
     }
 
     return render(request, 'accounts/cart.html', context)
@@ -130,6 +132,7 @@ def order(request, order_id):
     context = {
         'order': order,
         'ordermembers': ordermembers,
+        'notifications': Notification.objects.filter(receiver=request.user.profile),
     }
 
     return render(request, 'accounts/order.html', context)

@@ -78,7 +78,9 @@
                   <span class="badge badge-warning" style="position: absolute; left: 20px; font-size: 0.5rem;">1</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="notifications">
-                  <a class="dropdown-item" href="#">Notifications</a>
+                  {% for notification in notifications %}
+                    <a class="dropdown-item" href="#">{{notification.title}}</a>
+                  {% endfor %}
                 </div>
               </li>
               <li class="nav-item">

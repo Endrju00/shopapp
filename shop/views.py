@@ -4,7 +4,7 @@ from django import template
 
 
 from items.models import SaleOffer
-from accounts.models import Profile
+from accounts.models import Profile, Notification
 
 
 # Help functions
@@ -38,6 +38,7 @@ class HomePage(TemplateView):
 
         if self.request.user.is_authenticated:
             context['cart_items'] = Profile.objects.get(user=self.request.user).cart_items.all()
+            context['notifications'] = Notification.objects.filter(receiver=self.request.user.profile)
 
         get_suggestions(SaleOffer.objects.all(), context['categories'], context['suggestions'])
         return context

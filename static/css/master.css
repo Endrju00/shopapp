@@ -129,12 +129,17 @@ a {
   position: relative;
 }
 
-#cart{
+#cart {
   width: auto;
   left: -65px;
 }
 
-#user_panel, #notifications {
+#notifications {
+  width: auto;
+  left:-120px;
+}
+
+#user_panel{
   left: -65px;
 }
 

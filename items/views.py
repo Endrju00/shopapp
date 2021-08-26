@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Item, SaleOffer
 from .forms import SaleOfferForm, ItemForm
-from accounts.models import Profile, CartMembership
+from accounts.models import Profile, CartMembership, Notification
 from accounts.forms import CartForm
 
 # help functions
@@ -116,6 +116,7 @@ def index(request):
         'categories': SaleOffer.CATEGORY,
         'conditions': Item.CONDITION,
         'page_obj': page_obj,
+        'notifications': Notification.objects.filter(receiver=request.user.profile),
     }
 
     if request.user.is_authenticated:
@@ -161,6 +162,7 @@ def detail(request, sale_id):
     context = {
         'sale': sale,
         'form': form,
+        'notifications': Notification.objects.filter(receiver=request.user.profile),
     }
 
     if request.user.is_authenticated:
@@ -187,6 +189,7 @@ def filter(request, filter):
 
     if request.user.is_authenticated:
         context['cart_items'] = Profile.objects.get(user=request.user).cart_items.all()
+        context['notifications'] = Notification.objects.filter(receiver=request.user.profile)
 
     return render(request, 'items/offers_list.html', context)
 
@@ -205,7 +208,8 @@ def add_item(request):
 
     context = {
         'form': form,
-        'cart_items': Profile.objects.get(user=request.user).cart_items.all()
+        'cart_items': Profile.objects.get(user=request.user).cart_items.all(),
+        'notifications': Notification.objects.filter(receiver=request.user.profile),
     }
 
     return render(request, 'items/add_item.html', context)
@@ -223,7 +227,8 @@ def create_sale(request):
 
     context = {
         'form': form,
-        'cart_items': Profile.objects.get(user=request.user).cart_items.all()
+        'cart_items': Profile.objects.get(user=request.user).cart_items.all(),
+        'notifications': Notification.objects.filter(receiver=request.user.profile),
     }
 
     return render(request, 'items/create.html', context)
