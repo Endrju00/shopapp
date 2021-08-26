@@ -66,6 +66,14 @@ class Order(models.Model):
     class Meta:
         ordering = ['-id']
 
+    def get_address(self):
+        return {
+            'country': self.country,
+            'city': self.city,
+            'street': self.street,
+            'postal_code': self.postal_code,
+        }
+
 
 class OrderMembership(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -74,6 +82,18 @@ class OrderMembership(models.Model):
 
     def __str__(self):
         return f'{self.order_item} in #{self.order.id}'
+
+    class Meta:
+        ordering = ['-id']
+
+
+class Notification(models.Model):
+    receiver = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    title = models.CharField(default='Title', max_length=50)
+    text = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f'Notification #{self.id}'
 
     class Meta:
         ordering = ['-id']
