@@ -3,6 +3,7 @@ Available on https://shop-api-deploy.herokuapp.com (without images).
 
 ## Table of contents
 * [General info](#general-info)
+* [Features](#features)
 * [Technologies](#technologies)
 * [Installation](#installation)
 * [Deployment](#deployment)
@@ -10,7 +11,16 @@ Available on https://shop-api-deploy.herokuapp.com (without images).
 
 ## General info
 A shop API that enables user to buy, post and create sale offers of particular items from many categories.
- 	
+
+## Features
+* Creating accounts
+* Adding items
+* Creating sale offers
+* Filtering sales
+* Searching items by name
+* Ordering items
+* Notification system
+
 ## Technologies
 Project is created with:
 * Python
@@ -47,5 +57,9 @@ Project is created with:
 App is deployed on [Heroku](https://dashboard.heroku.com/) and available [here](https://shop-api-deploy.herokuapp.com)
 
 ## Gifs
+### 1. Filters
 ![](media/1.gif)
+### 2. Ordering items
 ![](media/2.gif)
+### 3. Notification system
+![](media/3.gif)
