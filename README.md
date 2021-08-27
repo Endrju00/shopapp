@@ -57,5 +57,9 @@ Project is created with:
 App is deployed on [Heroku](https://dashboard.heroku.com/) and available [here](https://shop-api-deploy.herokuapp.com)
 
 ## Gifs
+### 1. Filters
 ![](media/1.gif)
+### 2. Ordering items
 ![](media/2.gif)
+### 3. Notification system
+![](media/3.gif)
