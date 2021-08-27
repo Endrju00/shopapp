@@ -20,6 +20,7 @@ A shop API that enables user to buy, post and create sale offers of particular i
 * Searching items by name
 * Ordering items
 * Notification system
+#### See the [Gifs](#gifs).
 
 ## Technologies
 Project is created with:
