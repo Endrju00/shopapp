@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.http import Http404, HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -96,10 +96,12 @@ def cart(request):
 
                                 # Notify the dealer
                                 Notification(
+                                    sender_id=order.buyer.user.id,
                                     receiver=member.cart_item.item.dealer.profile,
                                     title=f'{order.buyer.user} bought your item.',
                                     sale_info=member.get_sale(),
                                     shipping_info=order.get_address(),
+                                    type='order'
                                 ).save()
 
                             # Delete items from cart
@@ -153,9 +155,27 @@ def notification(request, notification_id):
     if request.user.id != notification.receiver.user.id:
         raise Http404
 
-    context = {
-        'notification': notification,
-        'notifications': Notification.objects.filter(receiver=request.user.profile),
-    }
+    if request.method == 'POST':
+        if request.POST.get("send_item"):
+            Notification(
+                sender_id=request.user.id,
+                receiver=Profile.objects.get(user__id=notification.sender_id),
+                title=f'{request.user} shipped your item.',
+                sale_info='The item(s) listed below:' + '\n' + notification.sale_info + '\n' + 'has been shipped.',
+                shipping_info=notification.shipping_info,
+                type='shipping'
+            ).save()
+            notification.delete()
+            return HttpResponseRedirect(reverse('profile', args=[request.user.id]))
 
-    return render(request,'accounts/notification.html', context)
+        if request.POST.get("item_delivered"):
+            notification.delete()
+            return HttpResponseRedirect(reverse('profile', args=[request.user.id]))
+
+    if request.method == 'GET':
+        context = {
+            'notification': notification,
+            'notifications': Notification.objects.filter(receiver=request.user.profile),
+        }
+
+        return render(request,'accounts/notification.html', context)

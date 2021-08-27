@@ -56,7 +56,7 @@
                 {% for item in cart_items %}
                   <a class="dropdown-item" href="{% url 'items:detail' item.id %}">{{ item.item.name|capfirst }} {{ item.item.producer }}</a>
                 {% endfor %}
-                <a class="btn btn-warning" href="{% url 'cart' %}" style="width: 90%; margin-top:5%;">Go to cart</a>
+                <a class="btn btn-warning" href="{% url 'cart' %}" style="width: 90%; margin-top:3%;">Go to cart</a>
               </div>
             </li>
               <li class="nav-item dropdown" >
@@ -78,9 +78,13 @@
                   <span class="badge badge-warning" style="position: absolute; left: 20px; font-size: 0.5rem;">{{ notifications|length }}</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="notifications">
-                  {% for notification in notifications %}
-                    <a class="dropdown-item" href="{% url 'notification' notification.id %}">{{notification.title|capfirst}}</a>
-                  {% endfor %}
+                  {% if notifications %}
+                    {% for notification in notifications %}
+                      <a class="dropdown-item" href="{% url 'notification' notification.id %}">{{notification.title|capfirst}}</a>
+                    {% endfor %}
+                  {% else %}
+                    <a class="dropdown-item" href="{% url 'profile' user.id %}">No notifications.</a>
+                  {% endif %}
                 </div>
               </li>
               <li class="nav-item">

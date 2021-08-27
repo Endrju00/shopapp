@@ -7,7 +7,22 @@
     <h5>{{ notification.sale_info|linebreaks }}</h5><br>
     <legend class="border-bottom mb-2">Shipping information</legend>
     <h5>{{ notification.shipping_info|linebreaks }}</h5>
-
+    <legend class="border-bottom mb-2">Confirmation</legend>
+    {% if notification.type == 'order' %}
+    <div style="width: inherit;">
+      <form method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <button class="btn btn-outline-warning" type="submit" name="send_item" value={{notification.id}}><span class="fa fa-paper-plane-o"></span> Item has been shipped</button><br><br>
+      </form>
+    </div>
+    {% elif notification.type == 'shipping' %}
+    <div style="width: inherit;">
+      <form method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <button class="btn btn-outline-warning" type="submit" name="item_delivered" value={{notification.id}}><span class="fa fa-trash-o"></span> Item has been delivered, delete this notification</button><br><br>
+      </form>
+    </div>
+    {% endif %}
     <div class="border-top pt-2 mb-1" style ="margin-bottom: 20px;">
       <small class="text-muted">
         Want to see your profile? <a class='ml-2' href="{% url 'profile' user.id %}">Click here.</a>

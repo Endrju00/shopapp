@@ -86,10 +86,21 @@ class OrderMembership(models.Model):
 
 
 class Notification(models.Model):
+    sender_id = models.PositiveIntegerField()
     receiver = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField(default='Title', max_length=50)
     sale_info = models.TextField(max_length=255, blank=True)
     shipping_info = models.TextField(max_length=255, blank=True)
+
+    ORDER = 'order'
+    SHIPPING = 'shipping'
+
+    TYPE = [
+        (ORDER, 'Order'),
+        (SHIPPING, 'Shipping'),
+    ]
+
+    type = models.CharField(max_length=20, choices=TYPE, default=ORDER)
 
     def __str__(self):
         return f'Notification #{self.id}'
