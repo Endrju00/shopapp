@@ -107,3 +107,14 @@ class Notification(models.Model):
 
     class Meta:
         ordering = ['-id']
+
+
+class Mark(models.Model):
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="owner")
+    reviewer = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="reviewer")
+    value = models.FloatField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    sale = models.ForeignKey(SaleOffer, on_delete=models.CASCADE, blank=True, null=True)
+    text = models.TextField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f'{self.owner.user}\'s mark from {self.reviewer.user}'
