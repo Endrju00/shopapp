@@ -7,7 +7,7 @@ from items.models import SaleOffer
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    rating = models.IntegerField(
+    rating = models.FloatField(
         default=5,
         validators = [MaxValueValidator(5), MinValueValidator(1)]
     )
@@ -113,7 +113,6 @@ class Mark(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="owner")
     reviewer = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="reviewer")
     value = models.FloatField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    sale = models.ForeignKey(SaleOffer, on_delete=models.CASCADE, blank=True, null=True)
     text = models.TextField(max_length=255, blank=True)
 
     def __str__(self):
