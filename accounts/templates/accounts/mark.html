@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <div class="container card" style="margin-top: 3%; width: 100%;">
+    <h1 style="margin-top:1%;">Mark the {{marked_profile.user}}</h1>
+    <legend class="border-bottom mb-2">Additional remarks</legend>
+    <form method="post" enctype='multipart/form-data'>
+      {% csrf_token %}
+      {{form|crispy}}
+    <br><legend class="border-bottom mb-2">Final mark (1-5)</legend>
+      <button class="btn btn-outline-warning btn-lg" type="submit" name="mark" value=1 style="float: left; margin-right: 8px;"><span class="fa fa-star"></span></button>
+      <button class="btn btn-outline-warning btn-lg" type="submit" name="mark" value=2 style="float: left; margin-right: 8px;"><span class="fa fa-star"></span></button>
+      <button class="btn btn-outline-warning btn-lg" type="submit" name="mark" value=3 style="float: left; margin-right: 8px;"><span class="fa fa-star"></span></button>
+      <button class="btn btn-outline-warning btn-lg" type="submit" name="mark" value=4 style="float: left; margin-right: 8px;"><span class="fa fa-star"></span></button>
+      <button class="btn btn-outline-warning btn-lg" type="submit" name="mark" value=5 style="float: left; margin-right: 8px;"><span class="fa fa-star"></span></button>
+    </form><br>
+    <div class="border-top pt-2 mb-1" style ="margin-bottom: 20px;">
+      <small class="text-muted">
+        Want to see your profile? <a class='ml-2' href="{% url 'profile' user.id %}">Click here.</a>
+      </small>
+    </div>
+  </div>
+{% endblock %}

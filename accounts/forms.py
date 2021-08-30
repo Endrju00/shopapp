@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import CartMembership, Order, OrderMembership
+from .models import CartMembership, Order, OrderMembership, Mark
 
 
 class UserRegisterForm(UserCreationForm):
@@ -28,3 +28,13 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         exclude = ['buyer', 'order_items', 'status']
+
+
+class MarkForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(MarkForm, self).__init__(*args, **kwargs)
+        self.fields['text'].label = ""
+
+    class Meta:
+        model = Mark
+        fields = ['text']

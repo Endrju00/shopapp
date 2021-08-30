@@ -19,7 +19,10 @@
     <div style="width: inherit;">
       <form method="post" enctype='multipart/form-data'>
         {% csrf_token %}
-        <button class="btn btn-outline-warning" type="submit" name="item_delivered" value={{notification.id}}><span class="fa fa-trash-o"></span> Item has been delivered, delete this notification</button><br><br>
+        <button class="btn btn-outline-warning" type="submit" name="item_delivered" value={{notification.id}}>
+          <span class="fa fa-trash-o"></span>
+          Item has been delivered, delete this notification and mark the user.
+        </button><br><br>
       </form>
     </div>
     {% endif %}

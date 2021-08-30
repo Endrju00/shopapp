@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
 from .models import Profile, CartMembership, OrderMembership, Order, Notification
-from .forms import CartForm, OrderForm, UserRegisterForm
+from .forms import CartForm, OrderForm, UserRegisterForm, MarkForm
 from items.models import SaleOffer, Item
 
 # Create your views here.
@@ -170,7 +170,7 @@ def notification(request, notification_id):
 
         if request.POST.get("item_delivered"):
             notification.delete()
-            return HttpResponseRedirect(reverse('profile', args=[request.user.id]))
+            return HttpResponseRedirect(reverse('mark', args=[notification.sender_id]))
 
     if request.method == 'GET':
         context = {
@@ -179,3 +179,32 @@ def notification(request, notification_id):
         }
 
         return render(request,'accounts/notification.html', context)
+
+
+@login_required
+def mark(request, user_id):
+    marked_profile = Profile.objects.get(user__id=user_id)
+    request_profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        if request.POST.get('mark'):
+            form = MarkForm(request.POST)
+            if form.is_valid():
+                mark = form.save(commit=False)
+                mark.owner = marked_profile
+                mark.reviewer = request_profile
+                mark.value = int(request.POST.get('mark'))
+                mark.save()
+                marked_profile.rating = round((marked_profile.rating + mark.value)/2, 2)
+                marked_profile.save()
+
+
+        return HttpResponseRedirect(reverse('profile', args=[request.user.id]))
+
+    else:
+        context = {
+            'marked_profile': marked_profile,
+            'form': MarkForm(),
+        }
+
+        return render(request, 'accounts/mark.html', context)
