@@ -154,3 +154,7 @@ a {
 #div_id_quantity {
   margin-top:5px;
 }
+
+#div_id_text{
+  width: 140%;
+}
