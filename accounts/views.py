@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
-from .models import Profile, CartMembership, OrderMembership, Order, Notification
+from .models import Profile, CartMembership, OrderMembership, Order, Notification, Mark
 from .forms import CartForm, OrderForm, UserRegisterForm, MarkForm
 from items.models import SaleOffer, Item
 
@@ -50,6 +50,7 @@ def profile(request, user_id):
         'sales': SaleOffer.objects.filter(item__dealer__id=user_id),
         'items': Item.objects.filter(dealer__id=user_id),
         'notifications': Notification.objects.filter(receiver=request.user.profile),
+        'marks': Mark.objects.filter(owner__id=user_id)
     }
 
     if request.user.is_authenticated:

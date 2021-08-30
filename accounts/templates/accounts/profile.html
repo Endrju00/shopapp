@@ -10,6 +10,29 @@
     <legend><small class="text-muted">Date joined: {{ profile.date_joined }}</small></legend>
     <legend><small class="text-muted">Last login: {{ profile.last_login }}</small></legend>
   </div><br>
+
+  <div class="container card" id="marks">
+    <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">Marks</legend>
+    {% if marks %}
+      {% for mark in marks %}
+      <div class="container" style="height:auto;">
+        <li class="list-group-item" style="min-height: 100px;">
+          <div style="border-right: 1px solid lightgray; width: 10%; float: left; margin-right: 10px; height: inherit;">
+            <h4>{{mark.reviewer.user|capfirst}}</h4>
+            <span style="font-size:1.2rem; color: orange;">{{mark.value}} <span class="fa fa-star"></span></span>
+          </div>
+          <div style="float: left; width: 80%;">
+            <legend class="text-muted" style="font-size: 1rem;">{{mark.text|linebreaks}}</legend>
+          </div>
+        </li>
+      </div><br>
+      {% endfor %}
+
+    {% else %}
+      <legend><strong>No marks available.</strong></legend>
+    {% endif %}
+  </div><br>
+
   {% if user.id == profile.id %}
   <div class="container card" id="myitems">
     <legend class="border-bottom mb-4" style="margin-top: 1%; margin-bottom: 5%;">My items</legend>
