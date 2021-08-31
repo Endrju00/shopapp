@@ -1,5 +1,5 @@
 # ShopAPI
-Available on https://shop-api-deploy.herokuapp.com (without images).
+Available on https://shop-api-deploy.herokuapp.com
 
 ## Table of contents
 * [General info](#general-info)
@@ -7,7 +7,7 @@ Available on https://shop-api-deploy.herokuapp.com (without images).
 * [Technologies](#technologies)
 * [Installation](#installation)
 * [Deployment](#deployment)
-* [Gifs](#gifs)
+<!-- * [Gifs](#gifs) -->
 
 ## General info
 A shop API that enables user to buy, post and create sale offers of particular items from many categories.
@@ -20,7 +20,8 @@ A shop API that enables user to buy, post and create sale offers of particular i
 * Searching items by name
 * Ordering items
 * Notification system
-#### See the [Gifs](#gifs).
+* Giving marks and comments after buying items
+<!-- #### See the [Gifs](#gifs). -->
 
 ## Technologies
 Project is created with:
@@ -56,11 +57,11 @@ Project is created with:
 
 ## Deployment
 App is deployed on [Heroku](https://dashboard.heroku.com/) and available [here](https://shop-api-deploy.herokuapp.com)
-
+<!-- 
 ## Gifs
 ### 1. Filters
 ![](media/1.gif)
 ### 2. Ordering items
 ![](media/2.gif)
 ### 3. Notification system
-![](media/3.gif)
+![](media/3.gif) -->
