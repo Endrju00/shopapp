@@ -38,7 +38,7 @@
 
                   <!-- SECOND ITEM -->
                   <div class="card" id="card-item" style="margin-left:2%; margin-right: 2%;">
-                    <img src="{{ suggestions|lookup:key|index:1|get_attribute:'first_image'|get_attribute:'url' }}" class="card-img-top thumbnail" alt="Second item">
+                    <img src="{{ suggestions|lookup:key|index:1|get_attribute:'first_image'|get_attribute:'url' }}" class="card-img-top" alt="Second item">
                     <div class="card-body">
                       <h5 class="card-title" style="font-size: 1.1rem;">{{ suggestions|lookup:key|index:1|get_attribute:'title' }}</h5>
                       <p class="card-text">{{ suggestions|lookup:key|index:1|get_attribute:'price' }}zł</p>
@@ -48,7 +48,7 @@
 
                   <!-- THIRD ITEM -->
                   <div class="card" id="card-item">
-                    <img src="{{ suggestions|lookup:key|index:2|get_attribute:'first_image'|get_attribute:'url' }}" class="card-img-top thumbnail" alt="Third item">
+                    <img src="{{ suggestions|lookup:key|index:2|get_attribute:'first_image'|get_attribute:'url' }}" class="card-img-top" alt="Third item">
                     <div class="card-body">
                       <h5 class="card-title" style="font-size: 1.1rem;">{{ suggestions|lookup:key|index:2|get_attribute:'title' }}</h5>
                       <p class="card-text" id="detail-title">{{ suggestions|lookup:key|index:2|get_attribute:'price' }}zł</p>
