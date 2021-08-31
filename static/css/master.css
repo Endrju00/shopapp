@@ -36,6 +36,10 @@ a {
   border-bottom: 1px solid #dee2e6;
 }
 
+.card-body{
+  width: 100%;
+}
+
 .option{
   width: 100%;
   border-radius: 10px;
@@ -53,13 +57,10 @@ a {
   border: #faa307;
 }
 
-/* SORTED ABOVE */
-.characteristic{
-  margin-left: 40px;
-}
 
-.data{
-  float: left;
+/* SALE OFFERS */
+.characteristic{
+  margin-left: 3%;
 }
 
 .items {
@@ -73,17 +74,13 @@ a {
   width: 100%;
 }
 
-.card-body{
-  width: 100%;
-}
-
-
-
 .filters{
   float: left;
   width: 26%;
 }
 
+
+/* SALE DETAIL */
 .carousel-control-next, .carousel-control-prev{
   background: #e5e5e5;
   opacity:0.2;
@@ -98,6 +95,7 @@ a {
   height: 100%;
 }
 
+/* SORTED ABOVE */
 .category{
   position: relative;
   left: -15px;

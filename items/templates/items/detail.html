@@ -42,15 +42,7 @@
           {{ form|crispy }}
         </div>
         <br><br><br>
-
-
       </form>
-
-      <!-- <form method="post" enctype='multipart/form-data'>
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button class="btn btn-warning btn-lg" type="submit" name="add" value="1"><span class="fa fa-shopping-cart"></span> Add to cart</button><br><br>
-      </form> -->
 
       <p class="card-text"><small class="text-muted">
         Dealer: <a href="{% url 'profile' sale.item.dealer.id %}" style="color: orange;"><strong>{{ sale.item.dealer }}</strong></a>
@@ -76,6 +68,7 @@
       <p class="card-text second"><small class="text-muted">
         Color: <strong>{{ sale.item.color }}</strong>
         <span class="characteristic" style="margin-left: 30px;">Condition: <strong>{{sale.item.get_condition}}</strong></span>
+        <span class="characteristic">Number of pieces in the package: <strong>{{ sale.quantity }}</strong></span>
       </small></p>
     </div>
   </div><br>

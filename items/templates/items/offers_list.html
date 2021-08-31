@@ -6,36 +6,29 @@
     {% if sales %}
       {% for sale in page_obj %}
         <a href="{% url 'items:detail' sale.id %}" class="list-group-item list-group-item-action offer">
-          <p style="float: left;">
-            <img src="{{ sale.first_image.url }}" class="img-thumbnail" style="width: 250px; height: 250px; margin-right: 10px; object-fit: cover;">
-          </p>
+          <img src="{{ sale.first_image.url }}" class="img-thumbnail" style="float: left; width: 25%; height: 100%; px; margin-right: 10px; object-fit: cover;">
           <h1>{{ sale.title }}</h1>
           <p><small class="text-muted">
             Producer: <strong>{{ sale.item.producer }}</strong>
             <span class="characteristic">Condition: <strong>{{ sale.item.get_condition }}</strong></span>
-            <span class="characteristic">Number of pieces in the package: <strong>{{ sale.quantity }}</strong></span>
           </small></p>
 
-          <h2>{{ sale.price }}zł</h2>
+          <div style="float: left; width: auto;">
+            <h2>{{ sale.price }}zł</h2>
+            {% if sale.free_delivery %}
+              <div style="width: auto; float: left;">
+                <small class="text-muted">
+                  Free delivery available!
+                </small>
+              </div>
+            {% endif %}
 
-          <form method="post" enctype='multipart/form-data' style="margin-bottom: 0px;">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button class="btn btn-warning" type="submit" name="buy" value={{sale.id}}><span class="fa fa-dollar"></span> Buy Now!</button><br><br>
-          </form>
+            <form method="post" enctype='multipart/form-data'>
+              {% csrf_token %}
+              <button class="btn btn-warning" type="submit" name="buy" value={{sale.id}} style="width: 100%;"><span class="fa fa-dollar"></span> Buy Now!</button><br><br>
+            </form>
+          </div>
 
-          {% if sale.free_delivery %}
-            <small class="text-muted">
-              Free delivery available!
-            </small>
-            <p><small class="text-muted">
-              Available till: <strong>{{ sale.exp_date }}</strong>
-            </small></p>
-          {% else %}
-            <p style="margin-top:25px;"><small class="text-muted">
-              Available till: <strong>{{ sale.exp_date }}</strong>
-            </small></p>
-          {% endif %}
         </a>
       {% endfor %}
 
