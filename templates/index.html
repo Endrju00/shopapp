@@ -3,67 +3,60 @@
 {% load items_extras %}
 
 {% block content %}
+
+    <!-- CATEGORIES -->
     <div class="position-fixed" style="width: 23%;">
       <ul class="list-group">
         <li class="list-group-item active" aria-current="true" id="top-item" ><span class="fa fa-filter"></span> Categories</li>
         <a href="{% url 'items:index' %}" class="list-group-item list-group-item-action" style="font-size: 1.15rem;">All</a>
-
         {% for key in categories %}
           <a href="{% url 'items:filter' key %}" class="list-group-item list-group-item-action" style="font-size: 1.15rem;">{{ categories|lookup:key }}</a>
         {% endfor %}
-
       </ul>
     </div>
 
+    <!-- SUGGESTIONS -->
     <div class="suggestions">
-      <h2>This might interest you...</h2>
-      <div style="width: auto; text-align: center; ">
+      <legend style="font-size: 1.8rem;">This might interest you...</legend>
+      <div style="width: auto; text-align: center;">
         {% for key, category in categories.items %}
-
           {% if suggestions|lookup:key %}
-
             <div class="option">
-              <h3 style="margin-top: 20px;">{{category}}</h3>
-              <hr style="width: 90%;">
+              <legend class="border-bottom mb-4 heading">{{category}}</legend>
               <div class="images">
+                <div class="card-group" style="width: 100%;">
 
-                <a
-                  class="list-group-item-action image"
-                  style="margin-right: 65px;"
-                  href="{% url 'items:detail' suggestions|lookup:key|index:0|get_attribute:'id' %}">
+                  <!-- FIRST ITEM -->
+                  <div class="card" id="card-item">
+                    <img src="{{ suggestions|lookup:key|index:0|get_attribute:'first_image'|get_attribute:'url' }}" class="card-img-top" alt="First item">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 1.1rem;">{{ suggestions|lookup:key|index:0|get_attribute:'title' }}</h5>
+                      <p class="card-text">{{ suggestions|lookup:key|index:0|get_attribute:'price' }}zł</p>
+                      <a href="{% url 'items:detail' suggestions|lookup:key|index:0|get_attribute:'id' %}" class="btn btn-warning" id="detail-button"><span class="fa fa-info-circle"></span> Details</a>
+                    </div>
+                  </div>
 
-                  <img
-                    src="{{ suggestions|lookup:key|index:0|get_attribute:'first_image'|get_attribute:'url' }}"
-                    class="img-thumbnail thumbnail">
+                  <!-- SECOND ITEM -->
+                  <div class="card" id="card-item" style="margin-left:2%; margin-right: 2%;">
+                    <img src="{{ suggestions|lookup:key|index:1|get_attribute:'first_image'|get_attribute:'url' }}" class="card-img-top thumbnail" alt="Second item">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 1.1rem;">{{ suggestions|lookup:key|index:1|get_attribute:'title' }}</h5>
+                      <p class="card-text">{{ suggestions|lookup:key|index:1|get_attribute:'price' }}zł</p>
+                      <a href="{% url 'items:detail' suggestions|lookup:key|index:1|get_attribute:'id' %}" class="btn btn-warning" id="detail-button"><span class="fa fa-info-circle"></span> Details</a>
+                    </div>
+                  </div>
 
-                  <p></p><h5>{{ suggestions|lookup:key|index:0|get_attribute:'price' }}zł</h5>
-                  <h5>{{ suggestions|lookup:key|index:0|get_attribute:'title' }}</h5>
-                </a>
+                  <!-- THIRD ITEM -->
+                  <div class="card" id="card-item">
+                    <img src="{{ suggestions|lookup:key|index:2|get_attribute:'first_image'|get_attribute:'url' }}" class="card-img-top thumbnail" alt="Third item">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 1.1rem;">{{ suggestions|lookup:key|index:2|get_attribute:'title' }}</h5>
+                      <p class="card-text" id="detail-title">{{ suggestions|lookup:key|index:2|get_attribute:'price' }}zł</p>
+                      <a href="{% url 'items:detail' suggestions|lookup:key|index:2|get_attribute:'id' %}" class="btn btn-warning" id="detail-button"><span class="fa fa-info-circle"></span> Details</a>
+                    </div>
+                  </div>
 
-                <a
-                  class="list-group-item-action image"
-                  style="margin-right: 65px;"
-                  href="{% url 'items:detail' suggestions|lookup:key|index:1|get_attribute:'id' %}">
-
-                  <img
-                    src="{{ suggestions|lookup:key|index:1|get_attribute:'first_image'|get_attribute:'url' }}"
-                    class="img-thumbnail thumbnail">
-
-                  <p></p><h5>{{ suggestions|lookup:key|index:1|get_attribute:'price' }}zł</h5>
-                  <h5>{{ suggestions|lookup:key|index:1|get_attribute:'title' }}</h5>
-                </a>
-
-                <a
-                  class="list-group-item-action image"
-                  href="{% url 'items:detail' suggestions|lookup:key|index:2|get_attribute:'id' %}">
-
-                  <img
-                    src="{{ suggestions|lookup:key|index:2|get_attribute:'first_image'|get_attribute:'url' }}"
-                    class="img-thumbnail thumbnail">
-
-                  <p></p><h5>{{ suggestions|lookup:key|index:2|get_attribute:'price' }}zł</h5>
-                  <h5>{{ suggestions|lookup:key|index:2|get_attribute:'title' }}</h5>
-                </a>
+                </div>
               </div>
             </div><br>
           {% endif %}

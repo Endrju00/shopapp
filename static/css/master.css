@@ -1,3 +1,4 @@
+/* GENERAL */
 body {
   background: #e9ecef;
 }
@@ -10,6 +11,38 @@ a {
   color: orange;
 }
 
+ /* HOMEPAGE */
+.heading {
+  margin-top: 1%;
+  margin-left: 5%;
+  width: 90%;
+}
+
+#card-item {
+  border: 1px solid #dee2e6;
+  max-height:27rem;
+}
+
+#detail-button{
+  width: 100%;
+  height: auto;
+  margin-bottom: 5%;
+}
+
+.card-img-top {
+  height: 60%;
+  width:auto;
+  object-fit: cover;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.option{
+  width: 100%;
+  border-radius: 10px;
+  background: white;
+  border: 1px solid #f5f3f4;
+}
+
 .list-group {
   width: 80%;
   margin-right: 10%;
@@ -20,6 +53,7 @@ a {
   border: #faa307;
 }
 
+/* SORTED ABOVE */
 .characteristic{
   margin-left: 40px;
 }
@@ -42,6 +76,8 @@ a {
 .card-body{
   width: 100%;
 }
+
+
 
 .filters{
   float: left;
@@ -93,17 +129,13 @@ a {
 
 .images{
   width: 90%;
-  margin-left: 70px;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-left: 5%;
+  margin-bottom: 3%;
 }
 
 .thumbnail{
-  width: 200px;
-  height: 200px;
-  margin-top: 20px;
+  width: auto;
   object-fit: cover;
-  border: 0px;
 }
 
 .image{
@@ -115,13 +147,7 @@ a {
   background: #f5f3f4;
 }
 
-.option{
-  width: 100%;
-  border-radius: 5px;
-  background: white;
-  border: 1px solid #f5f3f4;
-  height: 470px;
-}
+
 
 .dropdown-menu{
   border: 1px solid gray;
