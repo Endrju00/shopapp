@@ -11,6 +11,50 @@ a {
   color: orange;
 }
 
+
+/* NAVBAR */
+
+.form-inline { /* SEARCH BAR */
+  width: 150%;
+}
+
+.dropdown-menu{
+  border: 1px solid gray;
+  text-align: center;
+  position: relative;
+}
+
+#cart {
+  width: auto;
+  left: -65px;
+}
+
+#notifications {
+  width: auto;
+  left:-120px;
+}
+
+#user_panel{
+  left: -65px;
+}
+
+#cart_items{
+  width: 80%;
+}
+
+#div_id_country, #div_id_city, #div_id_street, #div_id_postal_code  {
+  width: 140%;
+}
+
+#div_id_quantity {
+  margin-top:5px;
+}
+
+#div_id_text{
+  width: 140%;
+}
+
+
  /* HOMEPAGE */
 .heading {
   margin-top: 1%;
@@ -57,6 +101,17 @@ a {
   border: #faa307;
 }
 
+.suggestions {
+  margin-left: 25%;
+  width: 75%;
+}
+
+.images{
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 3%;
+}
+
 
 /* SALE OFFERS */
 .characteristic{
@@ -79,6 +134,26 @@ a {
   width: 26%;
 }
 
+.category{
+  position: relative;
+  left: -15px;
+  text-align: center;
+}
+
+.filters, .offer {
+  border-radius: 5px;
+}
+
+.form-check-label{
+  margin-bottom: 4px;
+  font-size: 1.1rem;
+}
+
+.form-check-input{
+  width: 15px;
+  height: 15px;
+}
+
 
 /* SALE DETAIL */
 .carousel-control-next, .carousel-control-prev{
@@ -93,92 +168,4 @@ a {
 
 #carouselExampleIndicators{
   height: 100%;
-}
-
-/* SORTED ABOVE */
-.category{
-  position: relative;
-  left: -15px;
-  text-align: center;
-}
-
-.form-inline{
-  width: 150%;
-}
-
-.form-check-label{
-  margin-bottom: 4px;
-  font-size: 1.1rem;
-}
-
-.form-check-input{
-  width: 15px;
-  height: 15px;
-}
-
-.filters, .offer {
-  border-radius: 5px;
-}
-
-.suggestions {
-  margin-left: 25%;
-  width: 75%;
-}
-
-.images{
-  width: 90%;
-  margin-left: 5%;
-  margin-bottom: 3%;
-}
-
-.thumbnail{
-  width: auto;
-  object-fit: cover;
-}
-
-.image{
-  border-radius: 10px;
-  height: 330px;
-  width: 250px;
-  float: left;
-  margin-left: 20px;
-  background: #f5f3f4;
-}
-
-
-
-.dropdown-menu{
-  border: 1px solid gray;
-  text-align: center;
-  position: relative;
-}
-
-#cart {
-  width: auto;
-  left: -65px;
-}
-
-#notifications {
-  width: auto;
-  left:-120px;
-}
-
-#user_panel{
-  left: -65px;
-}
-
-#cart_items{
-  width: 80%;
-}
-
-#div_id_country, #div_id_city, #div_id_street, #div_id_postal_code  {
-  width: 140%;
-}
-
-#div_id_quantity {
-  margin-top:5px;
-}
-
-#div_id_text{
-  width: 140%;
 }
