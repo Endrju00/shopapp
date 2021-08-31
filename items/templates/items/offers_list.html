@@ -6,7 +6,7 @@
     {% if sales %}
       {% for sale in page_obj %}
         <a href="{% url 'items:detail' sale.id %}" class="list-group-item list-group-item-action offer">
-          <img src="{{ sale.first_image.url }}" class="img-thumbnail" style="float: left; width: 25%; height: 100%; px; margin-right: 10px; object-fit: cover;">
+          <img src="{{ sale.first_image_url }}" class="img-thumbnail" style="float: left; width: 25%; height: 100%; px; margin-right: 10px; object-fit: cover;">
           <h1>{{ sale.title }}</h1>
           <p><small class="text-muted">
             Producer: <strong>{{ sale.item.producer }}</strong>
