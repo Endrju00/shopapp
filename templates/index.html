@@ -24,7 +24,7 @@
             <div class="option">
               <legend class="border-bottom mb-4 heading">{{category}}</legend>
               <div class="images">
-                <div class="card-group" style="width: 100%;">
+                <div class="card-deck" style="width: 100%;">
 
                   <!-- FIRST ITEM -->
                   <div class="card" id="card-item">
@@ -37,7 +37,7 @@
                   </div>
 
                   <!-- SECOND ITEM -->
-                  <div class="card" id="card-item" style="margin-left:2%; margin-right: 2%;">
+                  <div class="card" id="card-item">
                     <img src="{{ suggestions|lookup:key|index:1|get_attribute:'first_image'|get_attribute:'url' }}" class="card-img-top" alt="Second item">
                     <div class="card-body">
                       <h5 class="card-title" style="font-size: 1.1rem;">{{ suggestions|lookup:key|index:1|get_attribute:'title' }}</h5>
