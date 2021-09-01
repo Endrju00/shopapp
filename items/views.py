@@ -103,8 +103,8 @@ def index(request):
                 messages.warning(request, 'You must be logged in to buy an item.')
                 return redirect('login')
 
-    elif request.method == 'GET':
-        sales = SaleOffer.objects.order_by('-pub_date')
+
+    sales = SaleOffer.objects.order_by('-pub_date')
 
     # Paginate sales
     paginator = Paginator(sales, 60)
@@ -128,7 +128,7 @@ def index(request):
 def detail(request, sale_id):
     # Get data
     sale = get_object_or_404(SaleOffer, pk=sale_id)
-    
+
     if request.method == 'POST':
         if request.user.is_authenticated:
             form = CartForm(request.POST)
