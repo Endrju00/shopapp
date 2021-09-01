@@ -65,19 +65,23 @@ def in_cart(sale, profile):
 # Create your views here.
 def index(request):
     if request.method == 'POST':
+        filters = {}
+        
+        # check searchbar
+        try:
+            filters['search-bar'] = request.POST.getlist('search-bar')
+            sales = check_filters(filters)
+        except:
+            sales = SaleOffer.objects.order_by('-pub_date')
+
         if request.POST.get('submit_filters'):
-            filters = {}
             # Get the filters
-            try:
-                filters['search-bar'] = request.POST.getlist('search-bar')
-                filters['category'] = request.POST.getlist('category')
-                filters['condition'] = request.POST.getlist('condition')
-                filters['delivery'] = request.POST.getlist('free_delivery')
-                filters['color'] = request.POST.getlist('color')
-                filters['producer'] = request.POST.getlist('producer')
-                sales = check_filters(filters)
-            except:
-                sales = SaleOffer.objects.order_by('-pub_date')
+            filters['category'] = request.POST.getlist('category')
+            filters['condition'] = request.POST.getlist('condition')
+            filters['delivery'] = request.POST.getlist('free_delivery')
+            filters['color'] = request.POST.getlist('color')
+            filters['producer'] = request.POST.getlist('producer')
+            sales = check_filters(filters)
 
         # Clicked the buy now button
         elif request.POST.get('buy'):
@@ -103,8 +107,8 @@ def index(request):
                 messages.warning(request, 'You must be logged in to buy an item.')
                 return redirect('login')
 
-
-    sales = SaleOffer.objects.order_by('-pub_date')
+    elif request.method == 'GET':
+        sales = SaleOffer.objects.order_by('-pub_date')
 
     # Paginate sales
     paginator = Paginator(sales, 60)
