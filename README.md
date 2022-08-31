@@ -1,13 +1,11 @@
-# ShopAPI
-Available on https://shop-api-deploy.herokuapp.com
+# ShopApp
 
 ## Table of contents
 * [General info](#general-info)
 * [Features](#features)
 * [Technologies](#technologies)
 * [Installation](#installation)
-* [Deployment](#deployment)
-<!-- * [Gifs](#gifs) -->
+* [Gifs](#gifs)
 
 ## General info
 A shop API that enables user to buy, post and create sale offers of particular items from many categories.
@@ -54,14 +52,11 @@ Project is created with:
     python manage.py runserver
     ```
 4) To check your application go to [localhost](http://127.0.0.1:5000/)
-
-## Deployment
-App is deployed on [Heroku](https://dashboard.heroku.com/) and available [here](https://shop-api-deploy.herokuapp.com)
-<!-- 
+ 
 ## Gifs
 ### 1. Filters
 ![](media/1.gif)
 ### 2. Ordering items
 ![](media/2.gif)
 ### 3. Notification system
-![](media/3.gif) -->
+![](media/3.gif)
